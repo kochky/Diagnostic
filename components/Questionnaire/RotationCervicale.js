@@ -12,6 +12,7 @@ function RotationCervicale({navigation}){
     const [comment,setComment]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
+    const title="Rotation cervicale"
 
     useEffect(() => {
      props.setData(data=>({
@@ -26,12 +27,12 @@ function RotationCervicale({navigation}){
         
         <View style={styles.view}>
             <RowSuperior/>
-            <RowFourCheckbox text={"Rotation cervicale"}/>
-            <RowFourCheckbox text={"Rotation active supine"}/>
-            <RowDoubleGray text="Rotation passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Isolation C1-C2" firstCase="Limité" secondCase="Non limité"/>
+            <RowFourCheckbox title={title} text={"Rotation cervicale"}/>
+            <RowFourCheckbox title={title} text={"Rotation active supine"}/>
+            <RowDoubleGray title={title} text="Rotation passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Isolation C1-C2" firstCase="Limité" secondCase="Non limité"/>
             <TextInput
-                placeholder='Commentaires'
+                placeholder='Ajouter des commentaires'
                 onChangeText={setComment}
                 value={comment}
                 style={styles.input}

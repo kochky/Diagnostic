@@ -8,15 +8,15 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 
 function ExtensionCervicale({navigation}){
-
+    const title="Extension Cervicale"
 
     return(
         
         <View style={styles.view}>
             <RowSuperior/>
-            <RowFourCheckbox text={"Extension Cervicale"}/>
-            <RowFourCheckbox text={"Extension active supine"}/>
-            <RowDoubleGray text="Extension passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowFourCheckbox title ={title} text={"Extension Cervicale"}/>
+            <RowFourCheckbox title ={title} text={"Extension active supine"}/>
+            <RowDoubleGray title ={title} text="Extension passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
         <View style={styles.buttonContainer}>
             <Pressable onPress={()=> navigation.navigate('Rotation Cervicale')}>
                 <Icon name="navigate-next"  type="MaterialIcons" color='white'/>

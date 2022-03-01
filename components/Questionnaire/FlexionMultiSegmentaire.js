@@ -8,17 +8,17 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 
 function FlexionMultiSegmentaire({navigation}){
-
+    const title="Flexion multi-ségmentaire"
 
     return(
         
         <View style={styles.view}>
             <RowSuperior/>
-            <RowFourCheckbox text={"Flexion multi-ségmentaire"}/>
-            <RowFourCheckbox text={"Flexion multi-ségmentaire en décharge"}/>
-            <RowDoubleGray text="Flexion membre inf en décharge" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Ajout de la dorsiflexion de cheville" firstCase="Actif=Passif" secondCase="Aggravation"/>
-            <RowFourCheckbox text={"Oeuf (rachis en flexion)"}/>
+            <RowFourCheckbox title={title} text={"Flexion multi-ségmentaire"}/>
+            <RowFourCheckbox title={title} text={"Flexion multi-ségmentaire en décharge"}/>
+            <RowDoubleGray title={title} text="Flexion membre inf en décharge" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Ajout de la dorsiflexion de cheville" firstCase="Actif=Passif" secondCase="Aggravation"/>
+            <RowFourCheckbox title={title} text={"Oeuf (rachis en flexion)"}/>
 
         <View style={styles.buttonContainer}>
             <Pressable onPress={()=> navigation.navigate('Extension Multi-Segmentaire')}>

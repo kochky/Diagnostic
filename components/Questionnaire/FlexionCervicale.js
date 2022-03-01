@@ -1,30 +1,44 @@
-import { StyleSheet, View,Pressable } from 'react-native';
+import { StyleSheet, View,Pressable,ScrollView } from 'react-native';
 import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
-
+import Diagnostic from './model/Diagnostic';
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import DiagnosticGrey from './model/DiagnosticGrey';
 
 
 function FlexionCervicale({navigation}){
+    const title="Flexion cervicale"
 
+
+
+    
 
     return(
-        
-        <View style={styles.view}>
-            <RowSuperior/>
-            <RowFourCheckbox text={"Flexion cervicale"}/>
-            <RowFourCheckbox text={"Flexion active supine"}/>
-            <RowDoubleGray text="Flexion passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Isolation C0-C1" firstCase="Limité" secondCase="Non limité"/>
-        <View style={styles.buttonContainer}>
-            <Pressable onPress={()=> navigation.navigate('Extension Cervicale')}>
-                <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
-            </Pressable>
-        </View>
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
+            <View style={styles.view}>
+                <RowSuperior/>
+                <RowFourCheckbox title={title} text={"Flexion cervicale"}/>
+                <RowFourCheckbox title={title} text={"Flexion active supine"}/>
+                <RowDoubleGray title={title} text="Flexion passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+                <RowDoubleGray title={title} text="Isolation C0-C1" firstCase="Limité" secondCase="Non limité"/>
+                
+                <View style={{flex:1}}>
+                    <Diagnostic title={title} text={"Flexion active supine"} commentaire="SMCD Flexion cervicale et muscles posturaux du cou" />
+                    <DiagnosticGrey  title={title} text={"Flexion passive supine"} condition="Actif=Passif" commentaire="Test d'isolation C0-C1" />
+                    <DiagnosticGrey  title={title} text={"Isolation C0-C1"} condition="Passif mieux que actif" commentaire="SMCD muscles fléchisseurs profonds du cou" />
+                </View>
+                
 
-        </View>       
+            <View style={styles.buttonContainer}>
+                <Pressable onPress={()=> navigation.navigate('Extension Cervicale')}>
+                    <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                </Pressable>
+            </View>
+
+            </View>   
+        </ScrollView>    
 
     )
 
@@ -45,6 +59,8 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+        flex:1,
+        flexGrow:1,
     },
     buttonContainer:{
         backgroundColor:"#rgba(24,83,79,1)",

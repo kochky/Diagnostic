@@ -24,8 +24,7 @@ function Diagnostic ({navigation}){
     if (error===false){
       navigation.navigate('Flexion Cervicale')
       setVisible(false)
-    } 
-        
+    }      
   }, [error])
    
   useEffect(() => {
@@ -41,11 +40,12 @@ function Diagnostic ({navigation}){
   }, [])
 
   return(
+    <View style={{flex:1}}>
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <View style={styles.containerIcon}>
                 <Image  style={styles.icon} source={require('../ressources/patient.png')}/>
             </View>
-            <Text style={{flex:1,color:"white",fontSize:20}}>Saisissez les infos du patient</Text>
+            <Text style={{flex:1,color:"white",fontSize:20,marginBottom:30}}>Saisissez les infos du patient</Text>
             <TextInput
                     defaultValue={('0'+date.getDate()).slice(-2)+"/"+('0'+(date.getMonth()+1)).slice(-2)+"/"+date.getFullYear()}
                     style={styles.input}
@@ -73,6 +73,8 @@ function Diagnostic ({navigation}){
                   onChangeText={props.setPhone}
                   placeholder='Téléphone'
                   placeholderTextColor="white" 
+                  keyboardType="numeric"
+
               />
               <TextInput
                   defaultValue=""
@@ -96,7 +98,7 @@ function Diagnostic ({navigation}){
                   placeholderTextColor="white" 
               />
             <View style={{flex:1,marginBottom:40}}>{((props.name !==undefined && props.name!='') &&(props.firstName !==undefined && props.firstName!='')&&(props.phone !==undefined && props.phone!='')&&(props.email !==undefined && props.email!='')&&(props.structure !==undefined && props.structure!='')&&(props.activity !==undefined && props.activity!='')&&(props.date !==undefined && props.date!=''))  && <Button style={{flex:2}} title="Valider"  onPress={() =>validate()} ></Button>}</View>
-        
+
             <Modal
               animationType="slide"
               transparent={true}
@@ -112,7 +114,7 @@ function Diagnostic ({navigation}){
                   </View>
               </Modal>
         </ScrollView>
-
+</View>
     )    
 }
 
@@ -122,28 +124,27 @@ const styles = StyleSheet.create({
       fontWeight:"bold"
     },
     icon:{
-        height:100,
-        width:100,
+        height:75,
+        width:75,
     },
     containerIcon:{
-        flex:5
+        flex:5,
+        marginBottom:50 
     },
     container: {
-        flex: 1,
         backgroundColor:"rgba(24,83,79,1)",
         paddingTop:"1%",
         width:"100%",
       },
-      contentContainer: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor:"rgba(24,83,79,1)",
-        paddingTop:"1%",
-        width:"100%",
-      },
+    contentContainer: {
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor:"rgba(24,83,79,1)",
+      paddingTop:"1%",
+      width:"100%",
+    },
     input: {
-        margin: 20,
+        marginBottom: 30,
         borderWidth: 1,
         borderColor:"white",
         textAlign:'center',
@@ -152,7 +153,7 @@ const styles = StyleSheet.create({
         fontSize:20,
         height:30,
         borderRadius:15,
-        flex:1,
+        //flex:1,
       },
       centeredView: {
         flex: 1,

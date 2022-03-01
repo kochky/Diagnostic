@@ -13,6 +13,7 @@ function SingleLegStance({navigation}){
     const [comment,setComment]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
+    const title="Single leg stance"
     
     useEffect(() => {
         props.setData(data=>({
@@ -27,24 +28,24 @@ function SingleLegStance({navigation}){
         
         <View style={styles.view}>
             <RowSuperior/>
-            <RowFourCheckbox text={"Single leg stance"}/>
-            <RowFourCheckbox text={"Yeux fermés"}/>
+            <RowFourCheckbox title={title} text={"Single leg stance"}/>
+            <RowFourCheckbox title={title} text={"Yeux fermés"}/>
             <Text>Vestibule cervicale</Text>
-            <RowDoubleGray text="Romberg sur sol mou" firstCase="Perte d'équilibre mineur ou pas de perte d'équilibre" secondCase="Perte d'équilibre majeur"/>
-            <RowDoubleGray text="Perte d'équilibre" firstCase="Limité" secondCase=""/>
+            <RowDoubleGray title={title} text="Romberg sur sol mou" firstCase="Perte d'équilibre mineur ou pas de perte d'équilibre" secondCase="Perte d'équilibre majeur"/>
+            <RowDoubleGray title={title} text="Perte d'équilibre" firstCase="Limité" secondCase=""/>
             <Text>Hanche / ceinture pelvienne / rachis</Text>
-            <RowDoubleGray text="Chevalier servant" firstCase="Garde l'équilibre" secondCase="Garde l'équilibre"/>
-            <RowDoubleGray text="Bird dog" firstCase="Garde l'équilibre" secondCase="Garde l'équilibre"/>
-            <RowDoubleGray text="Hip adduction test" firstCase="Glut med non activé en premier" secondCase=""/>
-            <RowDoubleGray text="Hip extention test" firstCase="Glut med non activé en premier" secondCase=""/>
-            <RowDoubleGray text="Rolling patterns" firstCase="Difficulté" secondCase=""/>
+            <RowDoubleGray title={title}  text="Chevalier servant" firstCase="Garde l'équilibre" secondCase="Garde l'équilibre"/>
+            <RowDoubleGray title={title} text="Bird dog" firstCase="Garde l'équilibre" secondCase="Garde l'équilibre"/>
+            <RowDoubleGray title={title} text="Hip adduction test" firstCase="Glut med non activé en premier" secondCase=""/>
+            <RowDoubleGray  title={title}text="Hip extention test" firstCase="Glut med non activé en premier" secondCase=""/>
+            <RowDoubleGray title={title} text="Rolling patterns" firstCase="Difficulté" secondCase=""/>
             <Text>Cheville </Text>
-            <RowFourCheckbox text={"Marche talon pointe"}/>
-            <RowDoubleGray text="Dorsiflexion" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Inversion" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Eversion " firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowFourCheckbox title={title} text={"Marche talon pointe"}/>
+            <RowDoubleGray title={title} text="Dorsiflexion" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Inversion" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Eversion " firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
             <TextInput
-                placeholder='Commentaires'
+                placeholder='Ajoutez des commentaires'
                 onChangeText={setComment}
                 value={comment}
                 style={styles.input}

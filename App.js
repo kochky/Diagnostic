@@ -57,7 +57,7 @@ export default function App() {
     <UserContext.Provider value={{data:data,setData:setData,name:name,setName:setName,firstName:firstName,setFirstname:setFirstname,email:email,setEmail:setEmail,date:date,setDate:setDate,structure:structure,setStructure:setStructure,phone:phone,setPhone:setPhone,activity:activity,setActivity:setActivity}} >
       <NavigationContainer>
         <Stack.Navigator>
-        {/* <Stack.Screen name="Menu" component={Menu} />
+        <Stack.Screen name="Menu" component={Menu} />
         <Stack.Screen name="Nouveau diagnostique" component={Diagnostic} /> 
         <Stack.Screen name="Flexion Cervicale" component={FlexionCervicale} />
         <Stack.Screen name="Extension Cervicale" component={ExtensionCervicale} />
@@ -69,7 +69,7 @@ export default function App() {
         <Stack.Screen name="Rotation Multi-Segmentaire" component={RotationMultiSegmentaire} />
         <Stack.Screen name="Single Leg Stance" component={SingleLegStance} />
         <Stack.Screen name="Overhead Deep Squat" component={OverheadDeepSquat} />
-        <Stack.Screen name="Deep Squat" component={DeepSquat} /> */}
+        <Stack.Screen name="Deep Squat" component={DeepSquat} />
 
         <Stack.Screen name="FMS" component={Fms} />
         <Stack.Screen name="Resultat" component={Resultat} />

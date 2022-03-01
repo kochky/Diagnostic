@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { UserContext } from '../../../Context'
 
 
-function RowDoubleGray({text,firstCase,secondCase}){
+function RowDoubleGray({title,text,firstCase,secondCase}){
     const [selected,setSelected]=useState()
     const props = React.useContext(UserContext); 
 
@@ -31,15 +31,17 @@ function RowDoubleGray({text,firstCase,secondCase}){
             props.setData(data=>({
                 ...data,
                 [patientId]:{
-                    ...data[patientId]
-                    ,[text]:firstCase
+                    ...data[patientId],
+                    [title]:{...data[patientId][title]
+                    ,[text]:firstCase}
                 }}))
         }else if(selected===false){
             props.setData(data=>({
                 ...data,
                 [patientId]:{
-                    ...data[patientId]
-                    ,[text]:secondCase
+                    ...data[patientId],
+                    [title]:{...data[patientId][title]
+                    ,[text]:secondCase}
                 }}))
         }
     }, [selected])

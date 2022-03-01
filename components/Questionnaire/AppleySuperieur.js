@@ -13,7 +13,7 @@ function AppleySuperieur({navigation}){
     const [comment,setComment]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
-
+    const title= "Appley Superieur"
     
     useEffect(() => {
         props.setData(data=>({
@@ -28,12 +28,12 @@ function AppleySuperieur({navigation}){
         
         <View style={styles.view}>
             <RowSuperior/>
-            <RowFourCheckbox text={"Appley Superieur"}/>
-            <RowFourCheckbox text={"Appley Sup en décharge"}/>
-            <RowDoubleGray text="Rotation externe GH <90°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Flexion/Abduction (craw) décollage du buste" firstCase="Limité" secondCase="Non limité"/>
-            <RowDoubleGray text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Flexion du coude" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowFourCheckbox title={title} text={"Appley Superieur"}/>
+            <RowFourCheckbox title={title} text={"Appley Sup en décharge"}/>
+            <RowDoubleGray title={title} text="Rotation externe GH <90°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Flexion/Abduction (craw) décollage du buste" firstCase="Limité" secondCase="Non limité"/>
+            <RowDoubleGray title={title} text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Flexion du coude" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
 
             <TextInput
                 placeholder='Commentaires'

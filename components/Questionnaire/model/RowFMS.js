@@ -3,64 +3,38 @@ import React, { useState, useEffect } from 'react'
 import { Slider, Icon } from 'react-native-elements';
 import { UserContext } from '../../../Context'
 
-function RowFourCheckbox({title,text}){
+function RowFMS({text}){
     
-    const [value, setValue] = useState(0);
+    const [value, setValue] = useState(-1);
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
-    const [isLoaded,setIsLoaded]=useState(false)
+
 
     useEffect(() => {
-        setIsLoaded(true)
-        
-        if(isLoaded){
-            props.setData(data=>({
-                ...data,
-                [patientId]:{
-                    ...data[patientId],
-                    [title]:{...data[patientId][title]
-                    ,[text]:value}
-                }}))
-            
-                if(text==="Flexion active supine" && value===1){
-                props.setData(data=>({...data,
-                    [patientId]:{...data[patientId],
-                        [title]:{...data[patientId][title],
-                            ["diagnostic"]:{...data[patientId][title]["diagnostic"],
-                        [text]:"SMCD Flexion cervicale et muscles posturaux du cou"
-                }}}}))
-            }else {
-                const copyData= {...props.data[patientId][title]["diagnostic"]}
-                delete copyData[text]
-                props.setData(data=>({...data,
-                    [patientId]:{...data[patientId],
-                        [title]:{...data[patientId][title],
-                            ["diagnostic"]:copyData
-                }}}))
-
-            }
-        }else {
-            props.setData(data=>({...data,
-                [patientId]:{...data[patientId],
-                    [title]:{...data[patientId][title],
-                        ["diagnostic"]:""
-            }}}))
-        }
+        props.setData(data=>({
+            ...data,
+            [patientId]:{
+                ...data[patientId]
+                ,["FMS"]:{...data[patientId]["FMS"]
+                ,[text]:value}
+            }}))
     }, [value])
      
     const color = () => {
         switch(value){
+            case -1:
+                return "lightgrey";
+                break;
             case 0:
-               return "lightgrey";
+               return "#EC3C4C";
                break;
             case 1:
-                return "#75BB99";
+                return "#F27438";
                 break;
             default:
-                return "#EC3C4C";
+                return "#75BB99";
                 break;
        }
-
     };
     
     return(
@@ -70,8 +44,8 @@ function RowFourCheckbox({title,text}){
                 <Slider
                     value={value}
                     onValueChange={setValue}
-                    maximumValue={4}
-                    minimumValue={0}
+                    maximumValue={3}
+                    minimumValue={-1}
                     minimumTrackTintColor={color()}
                     step={1}
                     allowTouchTrack
@@ -112,4 +86,4 @@ const styles = StyleSheet.create({
     }
 });
 
-export default RowFourCheckbox
+export default RowFMS

@@ -8,14 +8,14 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 
 function DeepSquat({navigation}){
-
+    const title="Deep squat"
 
     return(
         
         <View style={styles.view}>
             <RowSuperior/>
-            <RowFourCheckbox text={"Deep squat"}/>
-           <RowDoubleGray text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>
+            <RowFourCheckbox title={title} text={"Deep squat"}/>
+           <RowDoubleGray title={title} text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>
 
         <View style={styles.buttonContainer}>
             <Pressable onPress={()=> navigation.navigate('FMS')}>

@@ -18,7 +18,7 @@ function RowSuperior(){
 
 const styles = StyleSheet.create({
     row:{
-        flex:1,
+        flex:0.5,
         flexDirection:"row",
         textAlign:'center',
         alignItems:"center",

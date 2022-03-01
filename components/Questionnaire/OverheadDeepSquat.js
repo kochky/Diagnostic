@@ -13,7 +13,7 @@ function OverheadDeepSquat({navigation}){
     const [comment,setComment]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
-
+    const title="Overhead deep squat"
     useEffect(() => {
      props.setData(data=>({
                 ...data,
@@ -27,20 +27,20 @@ function OverheadDeepSquat({navigation}){
         
         <View style={styles.view}>
             <RowSuperior/>
-            <RowFourCheckbox text={"Overhead deep squat"}/>
-            <RowDoubleGray text="Stabilisé" firstCase="Mieux" secondCase="Pas mieux"/>
+            <RowFourCheckbox title={title} text={"Overhead deep squat"}/>
+            <RowDoubleGray title={title} text="Stabilisé" firstCase="Mieux" secondCase="Pas mieux"/>
             <Text>Upper Body /  Tronc</Text>
-            <RowFourCheckbox text={"Ligne GH-GH- Coude"}/>
-            <RowDoubleGray text="Lumbar lock" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Dwerk" firstCase="" secondCase="Sonnette latérale ou décollement scapulaire"/>
-            <RowDoubleGray text="Sphynx (30°)" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowFourCheckbox title={title} text={"Ligne GH-GH- Coude"}/>
+            <RowDoubleGray title={title} text="Lumbar lock" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Dwerk" firstCase="" secondCase="Sonnette latérale ou décollement scapulaire"/>
+            <RowDoubleGray title={title}text="Sphynx (30°)" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
             <Text>Lower Body </Text>
-            <RowDoubleGray text="Chevalier servant " firstCase="Limité" secondCase="Pas stable"/>
-            <RowDoubleGray text="Genou - poitrine " firstCase="Limité" secondCase="Pas limité"/>
-            <RowDoubleGray text="Genou - poitrine avec les mains sous les genoux" firstCase="Limité" secondCase="Pas limité"/>
-            <RowDoubleGray text="Hip adduction test" firstCase="Glut med activé deuxieme" secondCase=""/>
-            <RowDoubleGray text="Pied plat fonctionnel" firstCase="Affaissement de la voute plantaire" secondCase=""/>
-            <RowDoubleGray text="Stabilisé" firstCase="Mieux" secondCase="Pas mieux"/>
+            <RowDoubleGray title={title}text="Chevalier servant " firstCase="Limité" secondCase="Pas stable"/>
+            <RowDoubleGray title={title} text="Genou - poitrine " firstCase="Limité" secondCase="Pas limité"/>
+            <RowDoubleGray title={title} text="Genou - poitrine avec les mains sous les genoux" firstCase="Limité" secondCase="Pas limité"/>
+            <RowDoubleGray title={title} text="Hip adduction test" firstCase="Glut med activé deuxieme" secondCase=""/>
+            <RowDoubleGray title={title} text="Pied plat fonctionnel" firstCase="Affaissement de la voute plantaire" secondCase=""/>
+            <RowDoubleGray title={title} text="Stabilisé" firstCase="Mieux" secondCase="Pas mieux"/>
             <TextInput
                 placeholder='Commentaires'
                 onChangeText={setComment}

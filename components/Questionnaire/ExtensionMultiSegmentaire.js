@@ -8,7 +8,7 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 
 function ExtensionMultiSegmentaire({navigation}){
-
+    const title="Extension multi-ségmentaire"
 
     return(
         
@@ -16,21 +16,21 @@ function ExtensionMultiSegmentaire({navigation}){
             <RowSuperior/>
             <Text>Membre sup</Text>
 
-            <RowFourCheckbox text={"Extension multi-ségmentaire"}/>
-            <RowFourCheckbox text={"Décharge membre sup (sans flexion d'épaule)"}/>
+            <RowFourCheckbox title={title} text={"Extension multi-ségmentaire"}/>
+            <RowFourCheckbox title={title} text={"Décharge membre sup (sans flexion d'épaule)"}/>
 
-            <RowDoubleGray text="Jésus position" firstCase="Pas de modification de la position des bras à l'allongement des jambes" secondCase="Si bras en contact avec la table à l'allongement des jambes"/>
+            <RowDoubleGray title={title} text="Jésus position" firstCase="Pas de modification de la position des bras à l'allongement des jambes" secondCase="Si bras en contact avec la table à l'allongement des jambes"/>
             <Text>Lumbar Lock modifé (Main sur occiput)</Text>
-            <RowFourCheckbox text={"Ligne GH-GH- Coude"}/>
-            <RowDoubleGray text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray text="Dwerk" firstCase="" secondCase="Sonnette latérale ou décollement scapulaire"/>
+            <RowFourCheckbox title={title} text={"Ligne GH-GH- Coude"}/>
+            <RowDoubleGray title={title}text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+            <RowDoubleGray title={title} text="Dwerk" firstCase="" secondCase="Sonnette latérale ou décollement scapulaire"/>
             <Text>Membre inf</Text>
-            <RowFourCheckbox text={"Décharge mb droite ou gauche"}/>
-            <RowFourCheckbox text={"FABER"}/>
-            <RowFourCheckbox text={"Faber Stabilisé"}/>
-            <RowFourCheckbox text={"Thomas"}/>
-            <RowDoubleGray text="Hip adduction test" firstCase="Glut med non activé en premier" secondCase=""/>
-            <RowDoubleGray text="Hip extension test" firstCase="Glut med non activé en premier" secondCase=""/>
+            <RowFourCheckbox title={title} text={"Décharge mb droite ou gauche"}/>
+            <RowFourCheckbox title={title}text={"FABER"}/>
+            <RowFourCheckbox title={title}text={"Faber Stabilisé"}/>
+            <RowFourCheckbox title={title} text={"Thomas"}/>
+            <RowDoubleGray title={title} text="Hip adduction test" firstCase="Glut med non activé en premier" secondCase=""/>
+            <RowDoubleGray title={title}text="Hip extension test" firstCase="Glut med non activé en premier" secondCase=""/>
 
 
 
