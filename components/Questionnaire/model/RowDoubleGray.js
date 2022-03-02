@@ -2,13 +2,16 @@ import { StyleSheet, Text, View } from 'react-native';
 import { CheckBox, Icon } from 'react-native-elements';
 import React, { useState, useEffect } from 'react'
 import { UserContext } from '../../../Context'
+import commentaireGrisArray from '../../ressources/commentaireGrisArray';
 
 
 function RowDoubleGray({title,text,firstCase,secondCase}){
-    const [selected,setSelected]=useState()
     const props = React.useContext(UserContext); 
-
+    const [isLoaded,setIsLoaded]=useState(false)
     const patientId= props.name+props.firstName+props.date
+    const [selected,setSelected]=useState()
+    const [comment,setComment]=useState()
+    
 
     function isSelected(){
         if(selected!=undefined){
@@ -27,22 +30,53 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
     }
 
     useEffect(() => {
-        if(selected){
-            props.setData(data=>({
-                ...data,
-                [patientId]:{
-                    ...data[patientId],
-                    [title]:{...data[patientId][title]
-                    ,[text]:firstCase}
-                }}))
-        }else if(selected===false){
-            props.setData(data=>({
-                ...data,
-                [patientId]:{
-                    ...data[patientId],
-                    [title]:{...data[patientId][title]
-                    ,[text]:secondCase}
-                }}))
+        setIsLoaded(true)
+        
+        if(isLoaded){
+            if(selected){
+                props.setData(data=>({
+                    ...data,
+                    [patientId]:{
+                        ...data[patientId],
+                        [title]:{...data[patientId][title]
+                        ,[text]:[selected,firstCase]}
+                    }}))
+
+            commentaireGrisArray.map((categorie)=>{if (Object.keys(categorie).toString()===title.toString()){
+                Object.values(categorie).map((commentaire)=>{
+                    Object.keys(commentaire).map(clef=>{if (clef.toString()===text.toString()){
+                        setComment(commentaire[text][0])
+                        props.setData(data=>({...data,
+                            [patientId]:{...data[patientId],
+                                ["diagnostic"]:{...data[patientId]["diagnostic"],
+                                [title]:{...data[patientId]["diagnostic"][title],
+                                [text]:commentaire[text][0]
+                        }}}}))
+                }})})
+            }})
+
+            }else if(selected===false){
+                props.setData(data=>({
+                    ...data,
+                    [patientId]:{
+                        ...data[patientId],
+                        [title]:{...data[patientId][title]
+                            ,[text]:[selected,firstCase]}
+                        }}))
+                commentaireGrisArray.map((categorie)=>{if (Object.keys(categorie).toString()===title.toString()){
+                    Object.values(categorie).map((commentaire)=>{
+                        Object.keys(commentaire).map(clef=>{if (clef.toString()===text.toString()){
+                            setComment(commentaire[text][1])
+                            props.setData(data=>({...data,
+                                [patientId]:{...data[patientId],
+                                    ["diagnostic"]:{...data[patientId]["diagnostic"],
+                                    [title]:{...data[patientId]["diagnostic"][title],
+                                    [text]:commentaire[text][1]
+                            }}}}))
+                    }})})
+                }})
+
+            }
         }
     }, [selected])
     
@@ -51,8 +85,8 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
         <View style={styles.container}>
             <View style={styles.firstrow}>
                 <Text style={{flex:1.5}}></Text>
-                <Text style={{flex:2,alignItems:'center',fontWeight:"bold"}}> {firstCase} </Text>
-                <Text style={{flex:2,alignItems:'center',fontWeight:"bold"}}> {secondCase} </Text>
+                <Text style={{flex:2,alignItems:'center',fontWeight:"bold",fontSize:12}}> {firstCase} </Text>
+                <Text style={{flex:2,alignItems:'center',fontWeight:"bold",fontSize:12}}> {secondCase} </Text>
             </View>
 
             <View style={styles.row}>
@@ -71,6 +105,9 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
                 />}
                 </View>
             </View>
+            <View style={{height:50,marginTop:20}}>
+                <Text style={styles.text} >{comment}</Text>
+            </View>
         </View>
         )
 }
@@ -83,15 +120,25 @@ const styles = StyleSheet.create({
         alignItems:"center",
         borderTopWidth:1,
         borderTopColor:"#rgba(24,83,79,1)",
+        height:50,
+        paddingTop:10,
+        fontSize:12
     },
     firstrow:{
         flex:1,
         flexDirection:"row",
         textAlign:"center",
         alignItems:"center",
+        height:50,
+        paddingBottom:10
+
     },
     container:{
         flex:1,
+    },
+    text:{
+        color:"#rgba(24,83,79,1)",
+        fontWeight:"bold",
     }
 });
 

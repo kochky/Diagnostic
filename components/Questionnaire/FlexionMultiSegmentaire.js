@@ -1,6 +1,7 @@
-import { StyleSheet, View,Pressable } from 'react-native';
-import React, { useState, useEffect} from 'react'
+import { StyleSheet, View,Pressable,ScrollView } from 'react-native';
+import React from 'react'
 import { Icon } from 'react-native-elements';
+import { UserContext } from '../../Context'
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -9,27 +10,27 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 function FlexionMultiSegmentaire({navigation}){
     const title="Flexion multi-ségmentaire"
+    const props = React.useContext(UserContext); 
+    const patientId= props.name+props.firstName+props.date
+
 
     return(
-        
-        <View style={styles.view}>
-            <RowSuperior/>
-            <RowFourCheckbox title={title} text={"Flexion multi-ségmentaire"}/>
-            <RowFourCheckbox title={title} text={"Flexion multi-ségmentaire en décharge"}/>
-            <RowDoubleGray title={title} text="Flexion membre inf en décharge" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray title={title} text="Ajout de la dorsiflexion de cheville" firstCase="Actif=Passif" secondCase="Aggravation"/>
-            <RowFourCheckbox title={title} text={"Oeuf (rachis en flexion)"}/>
-
-        <View style={styles.buttonContainer}>
-            <Pressable onPress={()=> navigation.navigate('Extension Multi-Segmentaire')}>
-                <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
-            </Pressable>
-        </View>
-
-        </View>       
-
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
+            <View style={styles.view}>
+                <RowSuperior/>
+                <RowFourCheckbox title={title} text={"Flexion multi-ségmentaire"}/>
+                <RowFourCheckbox title={title} text={"Flexion multi-ségmentaire en décharge"}/>
+                <RowDoubleGray title={title} text="Flexion membre inf en décharge" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+                <RowDoubleGray title={title} text="Ajout de la dorsiflexion de cheville" firstCase="Actif=Passif" secondCase="Aggravation"/>
+                <RowFourCheckbox title={title} text={"Oeuf (rachis en flexion)"}/>
+                <View style={styles.buttonContainer}>
+                    <Pressable onPress={()=> navigation.navigate('Extension Multi-Segmentaire')}>
+                        <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                    </Pressable>
+                </View>
+            </View>       
+        </ScrollView>
     )
-
 }
 
 const styles = StyleSheet.create({
@@ -57,6 +58,10 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignSelf:"flex-end",
         marginTop:30,
+    },
+    text:{
+        color:"#rgba(24,83,79,1)",
+        fontWeight:"bold",
     }
 });
 

@@ -1,6 +1,7 @@
 import { StyleSheet, View,Pressable } from 'react-native';
-import React, { useState, useEffect} from 'react'
+import React from 'react'
 import { Icon } from 'react-native-elements';
+import { UserContext } from '../../Context'
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -9,19 +10,22 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 function DeepSquat({navigation}){
     const title="Deep squat"
+    const props = React.useContext(UserContext); 
+    const patientId= props.name+props.firstName+props.date
 
+  
+      
     return(
         
         <View style={styles.view}>
             <RowSuperior/>
             <RowFourCheckbox title={title} text={"Deep squat"}/>
-           <RowDoubleGray title={title} text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>
-
-        <View style={styles.buttonContainer}>
-            <Pressable onPress={()=> navigation.navigate('FMS')}>
-                <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
-            </Pressable>
-        </View>
+            <RowDoubleGray title={title} text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>
+            <View style={styles.buttonContainer}>
+                <Pressable onPress={()=> navigation.navigate('FMS')}>
+                    <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                </Pressable>
+            </View>
 
         </View>       
 
@@ -54,6 +58,10 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignSelf:"flex-end",
         marginTop:30,
+    },
+    text:{
+        color:"#rgba(24,83,79,1)",
+        fontWeight:"bold",
     }
 });
 

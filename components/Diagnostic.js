@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View,ScrollView,TextInput,Button,Image,Modal } from 'react-native';
 import React,{ useEffect, useState } from 'react';
 import { UserContext } from '../Context'
-
-import image from '../ressources/kira-auf-der-heide-_Zd6COnH5E8-unsplash.jpg'
+import commentaireGrisArray from './ressources/commentaireGrisArray';
 
 
 function Diagnostic ({navigation}){
@@ -12,10 +11,13 @@ function Diagnostic ({navigation}){
 
   const props = React.useContext(UserContext); 
   const date= new Date()
+  const diagnostic= new Object()
+  commentaireGrisArray.map(groupe=>diagnostic[Object.keys(groupe)]={})
+  
   
   function validate(){
     setError(false)
-    props.setData(data=>({...data,[props.name+props.firstName+props.date]:{date:props.date,name:props.name,firstName:props.firstName,phone:props.phone,email:props.email,structure:props.structure,activity:props.activity}}))      
+    props.setData(data=>({...data,[props.name+props.firstName+props.date]:{date:props.date,name:props.name,firstName:props.firstName,phone:props.phone,email:props.email,structure:props.structure,activity:props.activity,diagnostic:diagnostic}}))      
     Object.keys(props.data).map(data=>data===props.name+props.firstName+props.date && setError(true,setVisible(true)))
   
   }
@@ -35,6 +37,7 @@ function Diagnostic ({navigation}){
     props.setEmail()
     props.setStructure()
     props.setActivity()
+    props.setData({})
     setError()
     setVisible(false)
   }, [])

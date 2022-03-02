@@ -1,6 +1,7 @@
-import { StyleSheet, View,Pressable } from 'react-native';
-import React, { useState, useEffect} from 'react'
+import { StyleSheet, View,Pressable,ScrollView } from 'react-native';
+import React from 'react'
 import { Icon } from 'react-native-elements';
+import { UserContext } from '../../Context'
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -8,25 +9,27 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 
 function ExtensionCervicale({navigation}){
-    const title="Extension Cervicale"
+    const title="Extension cervicale"
+    const props = React.useContext(UserContext); 
+    const patientId= props.name+props.firstName+props.date
+
 
     return(
-        
-        <View style={styles.view}>
-            <RowSuperior/>
-            <RowFourCheckbox title ={title} text={"Extension Cervicale"}/>
-            <RowFourCheckbox title ={title} text={"Extension active supine"}/>
-            <RowDoubleGray title ={title} text="Extension passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-        <View style={styles.buttonContainer}>
-            <Pressable onPress={()=> navigation.navigate('Rotation Cervicale')}>
-                <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
-            </Pressable>
-        </View>
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
+            <View style={styles.view}>
+                <RowSuperior/>
+                <RowFourCheckbox title ={title} text={"Extension Cervicale"}/>
+                <RowFourCheckbox title ={title} text={"Extension active supine"}/>
+                <RowDoubleGray title ={title} text="Extension passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>  
+                <View style={styles.buttonContainer}>
+                    <Pressable onPress={()=> navigation.navigate('Rotation Cervicale')}>
+                        <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                    </Pressable>
+                </View>
 
-        </View>       
-
+            </View>       
+        </ScrollView>
     )
-
 }
 
 const styles = StyleSheet.create({
@@ -54,6 +57,10 @@ const styles = StyleSheet.create({
         justifyContent:"center",
         alignSelf:"flex-end",
         marginTop:30,
+    },
+    text:{
+        color:"#rgba(24,83,79,1)",
+        fontWeight:"bold",
     }
 });
 

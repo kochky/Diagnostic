@@ -1,4 +1,4 @@
-import { StyleSheet, View,Pressable,TextInput } from 'react-native';
+import { StyleSheet, View,Pressable,TextInput,ScrollView } from 'react-native';
 import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import { UserContext } from '../../Context'
@@ -10,44 +10,45 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 function AppleyInferieur({navigation}){
 
-    const [comment,setComment]=useState("")
+    const [commentaire,setCommentaire]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Appley Inférieur"
 
+  
     useEffect(() => {
      props.setData(data=>({
                 ...data,
                 [patientId]:{
                     ...data[patientId]
-                    ,["Commentaire Rotation cervicale"]:comment
+                    ,["Commentaire Rotation cervicale"]:commentaire
                 }}))
-    }, [comment])
+    }, [commentaire])
     
     return(
-        
-        <View style={styles.view}>
-            <RowSuperior/>
-            <RowFourCheckbox title={title} text={"Appley Inférieur"}/>
-            <RowFourCheckbox title={title} text={"Appley in en décharge"}/>
-            <RowDoubleGray title={title} text="Rotation interne GH <60°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray title={title} text="Extension GH <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray title={title} text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray title={title} text="Flexion du coude" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
+            <View style={styles.view}>
+                <RowSuperior/>
+                <RowFourCheckbox title={title} text={"Appley Inférieur"}/>
+                <RowFourCheckbox title={title} text={"Appley inf en décharge"}/>
+                <RowDoubleGray title={title} text="Rotation interne GH <60°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+                <RowDoubleGray title={title} text="Extension GH <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+                <RowDoubleGray title={title} text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+                <RowDoubleGray title={title} text="Flexion du coude" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
 
-            <TextInput
-                placeholder='Commentaires'
-                onChangeText={setComment}
-                value={comment}
-                style={styles.input}
-            />
-            <View style={styles.buttonContainer}>
-                <Pressable onPress={()=> navigation.navigate('Flexion Multi-Segmentaire')}>
-                    <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
-                </Pressable>
-            </View>
-
-        </View>       
+                <TextInput
+                    placeholder='Commentaires'
+                    onChangeText={setCommentaire}
+                    value={commentaire}
+                    style={styles.input}
+                />
+                <View style={styles.buttonContainer}>
+                    <Pressable onPress={()=> navigation.navigate('Flexion Multi-Segmentaire')}>
+                        <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                    </Pressable>
+                </View>
+            </View>    
+        </ScrollView>   
 
     )
 
@@ -80,6 +81,10 @@ const styles = StyleSheet.create({
         marginTop:30,
     },input:{
         color:"#rgba(24,83,79,1)"
+    },
+    text:{
+        color:"#rgba(24,83,79,1)",
+        fontWeight:"bold",
     }
 });
 

@@ -2,11 +2,11 @@ import { StyleSheet, View,Button,ImageBackground} from 'react-native';
 
 import image from '../ressources/kira-auf-der-heide-_Zd6COnH5E8-unsplash.jpg'
 
+import commentaireGrisArray from './ressources/commentaireGrisArray';
 
 
 function Menu ({navigation}){
-
-
+ 
     return (
         <View style={styles.container}>
             <ImageBackground  source={image} style={styles.image}>    

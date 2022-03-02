@@ -1,4 +1,4 @@
-import { StyleSheet, View,Pressable,TextInput } from 'react-native';
+import { StyleSheet, View,Pressable,TextInput,ScrollView } from 'react-native';
 import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import { UserContext } from '../../Context'
@@ -9,7 +9,7 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 
 function RotationCervicale({navigation}){
-    const [comment,setComment]=useState("")
+    const [commentaire,setCommentaire]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Rotation cervicale"
@@ -19,35 +19,33 @@ function RotationCervicale({navigation}){
                 ...data,
                 [patientId]:{
                     ...data[patientId]
-                    ,["Commentaire Rotation cervicale"]:comment
+                    ,["Commentaire Rotation cervicale"]:commentaire
                 }}))
-    }, [comment])
+    }, [commentaire])
     
     return(
-        
-        <View style={styles.view}>
-            <RowSuperior/>
-            <RowFourCheckbox title={title} text={"Rotation cervicale"}/>
-            <RowFourCheckbox title={title} text={"Rotation active supine"}/>
-            <RowDoubleGray title={title} text="Rotation passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-            <RowDoubleGray title={title} text="Isolation C1-C2" firstCase="Limité" secondCase="Non limité"/>
-            <TextInput
-                placeholder='Ajouter des commentaires'
-                onChangeText={setComment}
-                value={comment}
-                style={styles.input}
-            />
-            <View style={styles.buttonContainer}>
-                <Pressable onPress={()=> navigation.navigate('Appley Superieur')}>
-                    <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
-                </Pressable>
-            </View>
-            
-
-        </View>       
-
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
+            <View style={styles.view}>
+                <RowSuperior/>
+                <RowFourCheckbox title={title} text={"Rotation cervicale"}/>
+                <RowFourCheckbox title={title} text={"Rotation active supine"}/>
+                <RowDoubleGray title={title} text="Rotation passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
+                <RowDoubleGray title={title} text="Test isolation C1-C2" firstCase="Limité" secondCase="Non limité"/>
+                <TextInput
+                    placeholder='Ajouter des commentaires'
+                    onChangeText={setCommentaire}
+                    value={commentaire}
+                    style={styles.input}
+                />
+                <View style={styles.buttonContainer}>
+                    <Pressable onPress={()=> navigation.navigate('Appley Superieur')}>
+                        <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                    </Pressable>
+                </View>
+            </View>    
+        </ScrollView>    
+   
     )
-
 }
 
 const styles = StyleSheet.create({
@@ -78,6 +76,10 @@ const styles = StyleSheet.create({
     },
     input:{
         color:"#rgba(24,83,79,1)"
+    },
+    text:{
+        color:"#rgba(24,83,79,1)",
+        fontWeight:"bold",
     }
  
 });
