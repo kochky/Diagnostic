@@ -17,17 +17,27 @@ function Diagnostic ({navigation}){
   
   function validate(){
     setError(false)
-    props.setData(data=>({...data,[props.name+props.firstName+props.date]:{date:props.date,name:props.name,firstName:props.firstName,phone:props.phone,email:props.email,structure:props.structure,activity:props.activity,diagnostic:diagnostic}}))      
     Object.keys(props.data).map(data=>data===props.name+props.firstName+props.date && setError(true,setVisible(true)))
   
   }
   
+  function continuer(){
+    setError(false)
+  }
+
+  function modify(){
+    navigation.navigate('Flexion Cervicale')
+    setVisible(false)
+
+  }
   useEffect(() => {
-    if (error===false){
+   if(error===false){
+      props.setData(data=>({...data,[props.name+props.firstName+props.date]:{date:props.date,name:props.name,firstName:props.firstName,phone:props.phone,email:props.email,structure:props.structure,activity:props.activity,diagnostic:diagnostic}}))      
       navigation.navigate('Flexion Cervicale')
       setVisible(false)
-    }      
+   }
   }, [error])
+  
    
   useEffect(() => {
     props.setDate(('0'+date.getDate()).slice(-2)+"/"+('0'+(date.getMonth()+1)).slice(-2)+"/"+date.getFullYear())
@@ -108,10 +118,11 @@ function Diagnostic ({navigation}){
               visible={visible}>
                   <View style={styles.centeredView}>
                       <View style={styles.modalView}>
-                          <Text style={styles.text}>Une archive avec ce nom et cette date existe déjà, si vous continuez elle sera écrasée.</Text>
+                          <Text style={styles.text}>Une archive avec ce nom et cette date existe déjà, si vous continuez elle sera écrasée.Poursuivre permet de modifier une archive.</Text>
                           <View style={styles.buttonContainer}>
-                              <Button  color="#18534F"  onPress={()=>setError(false)} title="Continuer"></Button>
-                              <Button  color="#A7001E" onPress={()=>setVisible(false)} title="Changer"></Button>
+                              <Button  color="#18534F"  onPress={()=>continuer()} title="Continuer"></Button>
+                              <Button   onPress={()=>modify()} title="Poursuivre"></Button>
+                              <Button  color="#A7001E" onPress={()=>setVisible(false)} title="Retour"></Button>
                           </View>
                       </View>
                   </View>

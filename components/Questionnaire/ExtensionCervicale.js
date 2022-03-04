@@ -1,7 +1,6 @@
 import { StyleSheet, View,Pressable,ScrollView } from 'react-native';
 import React from 'react'
 import { Icon } from 'react-native-elements';
-import { UserContext } from '../../Context'
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -10,9 +9,6 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 function ExtensionCervicale({navigation}){
     const title="Extension cervicale"
-    const props = React.useContext(UserContext); 
-    const patientId= props.name+props.firstName+props.date
-
 
     return(
         <ScrollView contentContainerStyle={{flexGrow:1}}>

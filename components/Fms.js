@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View,Pressable,TextInput,Button } from 'react-native';
 import React,{ useEffect, useState } from 'react';
 import { UserContext } from '../Context'
-import { Slider, Icon } from 'react-native-elements';
 import RowFMS from "./Questionnaire/model/RowFMS"
 
 

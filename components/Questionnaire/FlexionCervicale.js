@@ -1,15 +1,12 @@
-import { StyleSheet, View,Pressable,ScrollView,Text } from 'react-native';
+import { StyleSheet, View,Pressable,ScrollView } from 'react-native';
 import React from 'react'
 import { Icon } from 'react-native-elements';
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
-import { UserContext } from '../../Context'
 
 function FlexionCervicale({navigation}){
     const title="Flexion cervicale"
-    const props = React.useContext(UserContext); 
-    const patientId= props.name+props.firstName+props.date
  
     return(
         <ScrollView contentContainerStyle={{flexGrow:1}}>
