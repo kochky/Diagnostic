@@ -14,16 +14,32 @@ function AppleyInferieur({navigation}){
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Appley Inférieur"
+    const [isLoaded,setIsLoaded]=useState(false)
 
   
     useEffect(() => {
-     props.setData(data=>({
-                ...data,
-                [patientId]:{
-                    ...data[patientId]
-                    ,["Commentaire Rotation cervicale"]:commentaire
-                }}))
-    }, [commentaire])
+
+        if(!isLoaded){
+            setIsLoaded(true)
+    
+            if(typeof(props.data[patientId][title]) == "object"){
+                if(typeof props.data[patientId][title]["commentaire"] =="string"){
+                    setCommentaire(props.data[patientId][title]["commentaire"])
+                }
+            }
+        
+        }else {
+        
+         props.setData(data=>({
+                    ...data,
+                    [patientId]:{
+                        ...data[patientId]
+                        ,[title]:{...data[patientId][title],
+                        ["commentaire"]:commentaire}
+                    }}))
+            }
+        }, [commentaire])
+        
     
     return(
         <ScrollView contentContainerStyle={{flexGrow:1}}>

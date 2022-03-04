@@ -30,6 +30,18 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
     }
 
     useEffect(() => {
+        if(isLoaded===false){
+            if(typeof(props.data[patientId][title]) != "undefined"){
+                if(props.data[patientId][title][text]===firstCase){
+                    setSelected(true)
+                }else if (props.data[patientId][title][text]===secondCase){
+                    setSelected(false)
+                }
+            }
+            if (typeof props.data[patientId]["diagnostic"][title]!="undefined"){
+                setComment(props.data[patientId]["diagnostic"][title][text])
+            }
+        }
         setIsLoaded(true)
         
         if(isLoaded){
@@ -39,7 +51,7 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
                     [patientId]:{
                         ...data[patientId],
                         [title]:{...data[patientId][title]
-                        ,[text]:[selected,firstCase]}
+                        ,[text]:firstCase}
                     }}))
 
             commentaireGrisArray.map((categorie)=>{if (Object.keys(categorie).toString()===title.toString()){
@@ -61,7 +73,7 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
                     [patientId]:{
                         ...data[patientId],
                         [title]:{...data[patientId][title]
-                            ,[text]:[selected,firstCase]}
+                            ,[text]:secondCase}
                         }}))
                 commentaireGrisArray.map((categorie)=>{if (Object.keys(categorie).toString()===title.toString()){
                     Object.values(categorie).map((commentaire)=>{

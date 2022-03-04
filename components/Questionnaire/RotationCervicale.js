@@ -13,22 +13,38 @@ function RotationCervicale({navigation}){
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Rotation cervicale"
+    const [isLoaded,setIsLoaded]=useState(false)
+
 
     useEffect(() => {
+
+    if(!isLoaded){
+        setIsLoaded(true)
+
+        if(typeof(props.data[patientId][title]) == "object"){
+            if(typeof props.data[patientId][title]["commentaire"] =="string"){
+                setCommentaire(props.data[patientId][title]["commentaire"])
+            }
+        }
+    
+    }else {
+    
      props.setData(data=>({
                 ...data,
                 [patientId]:{
                     ...data[patientId]
-                    ,["Commentaire Rotation cervicale"]:commentaire
+                    ,[title]:{...data[patientId][title],
+                    ["commentaire"]:commentaire}
                 }}))
+        }
     }, [commentaire])
     
     return(
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Rotation cervicale"}/>
-                <RowFourCheckbox title={title} text={"Rotation active supine"}/>
+                <RowFourCheckbox title={title} text="Rotation cervicale"/>
+                <RowFourCheckbox title={title} text="Rotation active supine"/>
                 <RowDoubleGray title={title} text="Rotation passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Test isolation C1-C2" firstCase="Limité" secondCase="Non limité"/>
                 <TextInput
