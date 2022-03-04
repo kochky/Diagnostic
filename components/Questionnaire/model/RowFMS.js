@@ -6,10 +6,11 @@ import { UserContext } from '../../../Context'
 function RowFMS({text}){
     
     const [value, setValue] = useState(-1);
+    const [isLoaded,setIsLoaded]=useState(false)
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
 
-
+  
     useEffect(() => {
         props.setData(data=>({
             ...data,
@@ -18,7 +19,20 @@ function RowFMS({text}){
                 ,["FMS"]:{...data[patientId]["FMS"]
                 ,[text]:value}
             }}))
+        setIsLoaded(true)
     }, [value])
+
+    useEffect(() => {
+      
+        if(isLoaded){
+            if (typeof(props.data[patientId]["FMS"])!= "undefined"){
+                if (typeof props.data[patientId]["FMS"][text] =="number"){
+                    setValue(props.data[patientId]["FMS"][text])
+                }
+            }
+        }
+    }, [isLoaded])
+    
      
     const color = () => {
         switch(value){

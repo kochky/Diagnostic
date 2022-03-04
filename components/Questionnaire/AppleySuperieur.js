@@ -2,6 +2,7 @@ import { StyleSheet, View,Pressable,TextInput,ScrollView } from 'react-native';
 import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import { UserContext } from '../../Context'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -16,7 +17,18 @@ function AppleySuperieur({navigation}){
     const patientId= props.name+props.firstName+props.date
     const [isLoaded,setIsLoaded]=useState(false)
 
-    
+    const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+      }
+    useEffect(() => {
+        storeData(props.data)
+    }, [props.data])
+ 
     useEffect(() => {
 
         if(!isLoaded){

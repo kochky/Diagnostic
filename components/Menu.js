@@ -1,12 +1,26 @@
+import React, { useEffect } from 'react';
 import { StyleSheet, View,Button,ImageBackground} from 'react-native';
-
 import image from '../ressources/kira-auf-der-heide-_Zd6COnH5E8-unsplash.jpg'
+import { UserContext } from '../Context'
 
-import commentaireGrisArray from './ressources/commentaireGrisArray';
 
 
 function Menu ({navigation}){
- 
+    const props = React.useContext(UserContext); 
+
+    useEffect(() => {
+        props.setNewPatient(true)
+    }, [])
+    
+    useEffect(() => {
+        const listener= navigation.addListener(
+                'focus', () => {
+                    props.setNewPatient(true)
+                }
+            );
+        return listener
+    }, [])
+      
     return (
         <View style={styles.container}>
             <ImageBackground  source={image} style={styles.image}>    
@@ -16,7 +30,7 @@ function Menu ({navigation}){
                         <Button title="Nouveau diagnostique" color="#rgba(24,83,79,1)"  onPress={() => navigation.navigate('Nouveau diagnostique')} ></Button>
                     </View>
                     <View style={styles.buttonContainer}>
-                        <Button title="Archives" color="#rgba(24,83,79,1)" onPress={() => navigation.navigate('Historique')}></Button>
+                        <Button title="Archives" color="#rgba(24,83,79,1)" onPress={() => navigation.navigate('Archives')}></Button>
                     </View>
                 </View>
             </ImageBackground>

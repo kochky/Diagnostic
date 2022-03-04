@@ -3,7 +3,6 @@ import React, { useState, useEffect } from 'react'
 import { Slider, Icon } from 'react-native-elements';
 import { UserContext } from '../../../Context'
 import commentaireArray from '../../ressources/commentairesArray';
-import { data } from 'browserslist';
 
 
 function RowFourCheckbox({title,text}){
@@ -15,25 +14,19 @@ function RowFourCheckbox({title,text}){
 
     useEffect(() => {
         if(isLoaded===false){
-
             if(typeof(props.data[patientId][title]) == "object"){
                 if(typeof props.data[patientId][title][text] =="number"){
                     setValue(props.data[patientId][title][text])
                 }
-                console.log(typeof props.data[patientId][title][text])
-                console.log(props.data[patientId][title][text])
-
             }
             if (typeof props.data[patientId]["diagnostic"][title]== "object"){
                 setComment(props.data[patientId]["diagnostic"][title][text])
-
             }
             setIsLoaded(true)
 
         }
 
-        if(isLoaded){
-
+        else if(isLoaded){
             props.setData(data=>({
                 ...data,
                 [patientId]:{
@@ -41,7 +34,6 @@ function RowFourCheckbox({title,text}){
                     [title]:{...data[patientId][title]
                     ,[text]:value}
                 }}))
-
             if(text.toString()==="Oeuf (rachis en flexion)"){
                 if(value===1){
                     setComment("SMCD muscles de la flexion rachidienne")

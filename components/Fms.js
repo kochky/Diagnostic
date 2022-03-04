@@ -2,6 +2,7 @@ import { StyleSheet, Text, View,Pressable,TextInput,Button } from 'react-native'
 import React,{ useEffect, useState } from 'react';
 import { UserContext } from '../Context'
 import RowFMS from "./Questionnaire/model/RowFMS"
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 function Fms({navigation}){
@@ -11,20 +12,28 @@ function Fms({navigation}){
     const [result,setResult]=useState(0)
     const [hidden,setHidden]=useState(true)
 
+    const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+      }
+    useEffect(() => {
+        storeData(props.data)
+    }, [props.data])
+ 
     useEffect(() => {
         if(props.data[patientId]["FMS"]){
-           setResult(0)
-           setHidden(false)
-           Object.values(props.data[patientId]["FMS"]).map(score=>score===-1 && setHidden(true))
-
+            setResult(0)
+            setHidden(false)
+            Object.values(props.data[patientId]["FMS"]).map(score=>score===-1 && setHidden(true))
             Object.values(props.data[patientId]["FMS"]).map(score=>setResult(prevState=>prevState+score))
-        }
-      
+        } 
     }, [props.data[patientId]["FMS"]])
     
     useEffect(() => {
-        console.log(result)
-
         props.setData(data=>({
             ...data,
             [patientId]:{

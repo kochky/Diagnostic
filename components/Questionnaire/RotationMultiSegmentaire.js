@@ -2,6 +2,7 @@ import { StyleSheet, View,Pressable,Text,TextInput,ScrollView } from 'react-nati
 import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import { UserContext } from '../../Context'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -15,7 +16,17 @@ function RotationMultiSegmentaire({navigation}){
     const title="Rotation multi-ségmentaire"
     const [isLoaded,setIsLoaded]=useState(false)
 
-
+    const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+      }
+    useEffect(() => {
+        storeData(props.data)
+    }, [props.data])
 
     useEffect(() => {
 

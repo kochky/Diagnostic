@@ -1,12 +1,27 @@
 import { StyleSheet, View,Pressable,ScrollView } from 'react-native';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Icon } from 'react-native-elements';
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext} from "../../Context"
 
 function FlexionCervicale({navigation}){
     const title="Flexion cervicale"
+    const props = React.useContext(UserContext); 
+
+    const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+      }
+    useEffect(() => {
+        storeData(props.data)
+    }, [props.data])
  
     return(
         <ScrollView contentContainerStyle={{flexGrow:1}}>

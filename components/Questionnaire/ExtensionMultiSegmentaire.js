@@ -1,7 +1,8 @@
 import { StyleSheet,Text, View,Pressable,ScrollView } from 'react-native';
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Icon } from 'react-native-elements';
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UserContext} from "../../Context"
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
@@ -9,7 +10,19 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 function ExtensionMultiSegmentaire({navigation}){
     const title="Extension multi-ségmentaire"
+    const props = React.useContext(UserContext); 
 
+    const storeData = async (value) => {
+        try {
+          const jsonValue = JSON.stringify(value)
+          await AsyncStorage.setItem('@storage_Key', jsonValue)
+        } catch (e) {
+          // saving error
+        }
+      }
+    useEffect(() => {
+        storeData(props.data)
+    }, [props.data])
 
     return(
         

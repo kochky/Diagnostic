@@ -4,6 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './Context'
+import Test from './components/Test';
 
 
 import Menu from './components/Menu';
@@ -30,13 +31,14 @@ const Stack = createNativeStackNavigator();
 export default function App() {
 
   const [data,setData]=useState({})
-  const [date,setDate]=useState()
-  const [name,setName]=useState()
-  const [firstName,setFirstname]=useState()
-  const [phone,setPhone]=useState()
-  const [email,setEmail]=useState()
-  const [structure,setStructure]=useState()
-  const [activity,setActivity]=useState()
+  const [date,setDate]=useState("")
+  const [name,setName]=useState("")
+  const [firstName,setFirstname]=useState("")
+  const [phone,setPhone]=useState("")
+  const [email,setEmail]=useState("")
+  const [structure,setStructure]=useState("")
+  const [activity,setActivity]=useState("")
+  const [newPatient,setNewPatient]=useState(true)
 
   const getData = async () => {
     try {
@@ -54,7 +56,7 @@ export default function App() {
 
 
   return (
-    <UserContext.Provider value={{data:data,setData:setData,name:name,setName:setName,firstName:firstName,setFirstname:setFirstname,email:email,setEmail:setEmail,date:date,setDate:setDate,structure:structure,setStructure:setStructure,phone:phone,setPhone:setPhone,activity:activity,setActivity:setActivity}} >
+    <UserContext.Provider value={{newPatient:newPatient,setNewPatient:setNewPatient,data:data,setData:setData,name:name,setName:setName,firstName:firstName,setFirstname:setFirstname,email:email,setEmail:setEmail,date:date,setDate:setDate,structure:structure,setStructure:setStructure,phone:phone,setPhone:setPhone,activity:activity,setActivity:setActivity}} >
       <NavigationContainer>
         <Stack.Navigator>
         <Stack.Screen name="Menu" component={Menu} />
@@ -70,10 +72,11 @@ export default function App() {
         <Stack.Screen name="Single Leg Stance" component={SingleLegStance} />
         <Stack.Screen name="Overhead Deep Squat" component={OverheadDeepSquat} />
         <Stack.Screen name="Deep Squat" component={DeepSquat} />
-
         <Stack.Screen name="FMS" component={Fms} />
         <Stack.Screen name="Resultat" component={Resultat} />
         <Stack.Screen name="Archives" component={Archives} />
+        <Stack.Screen name="Test" component={Test} />
+
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>

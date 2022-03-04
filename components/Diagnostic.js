@@ -3,7 +3,6 @@ import React,{ useEffect, useState } from 'react';
 import { UserContext } from '../Context'
 import commentaireGrisArray from './ressources/commentaireGrisArray';
 
-
 function Diagnostic ({navigation}){
   
   const [error,setError]=useState()
@@ -13,7 +12,15 @@ function Diagnostic ({navigation}){
   const date= new Date()
   const diagnostic= new Object()
   commentaireGrisArray.map(groupe=>diagnostic[Object.keys(groupe)]={})
-  
+
+  useEffect(() => {
+    const listener= navigation.addListener(
+            'focus', () => {
+                setError()
+            }
+        );
+    return listener
+    }, [])
   
   function validate(){
     setError(false)
@@ -40,16 +47,16 @@ function Diagnostic ({navigation}){
   
    
   useEffect(() => {
-    props.setDate(('0'+date.getDate()).slice(-2)+"/"+('0'+(date.getMonth()+1)).slice(-2)+"/"+date.getFullYear())
-    props.setName()
-    props.setFirstname()
-    props.setPhone()
-    props.setEmail()
-    props.setStructure()
-    props.setActivity()
-    props.setData({})
-    setError()
-    setVisible(false)
+    if(props.newPatient){
+      props.setDate(('0'+date.getDate()).slice(-2)+"/"+('0'+(date.getMonth()+1)).slice(-2)+"/"+date.getFullYear())
+      props.setName("")
+      props.setFirstname("")
+      props.setPhone("")
+      props.setEmail("")
+      props.setStructure("")
+      props.setActivity("")
+    }
+  
   }, [])
 
   return(
@@ -60,28 +67,28 @@ function Diagnostic ({navigation}){
             </View>
             <Text style={{flex:1,color:"white",fontSize:20,marginBottom:30}}>Saisissez les infos du patient</Text>
             <TextInput
-                    defaultValue={('0'+date.getDate()).slice(-2)+"/"+('0'+(date.getMonth()+1)).slice(-2)+"/"+date.getFullYear()}
+                    value={props.date}
                     style={styles.input}
                     onChangeText={props.setDate}
                     placeholder='Date'
                     placeholderTextColor="white" 
                 />
             <TextInput
-                    defaultValue=""
+                    value={props.name}
                     style={styles.input}
                     onChangeText={props.setName}
                     placeholder='Nom '
                     placeholderTextColor="white" 
               />
               <TextInput
-                  defaultValue=""
+                  value={props.firstName}
                   style={styles.input}
                   onChangeText={props.setFirstname}
                   placeholder='Prénom '
                   placeholderTextColor="white" 
               />
               <TextInput
-                  defaultValue=""
+                  value={props.phone}
                   style={styles.input}
                   onChangeText={props.setPhone}
                   placeholder='Téléphone'
@@ -90,21 +97,21 @@ function Diagnostic ({navigation}){
 
               />
               <TextInput
-                  defaultValue=""
+                  value={props.email}
                   style={styles.input}
                   onChangeText={props.setEmail}
                   placeholder='Email'
                   placeholderTextColor="white" 
               />
               <TextInput
-                  defaultValue=""
+                  value={props.structure}
                   style={styles.input}
                   onChangeText={props.setStructure}
                   placeholder='Structure'
                   placeholderTextColor="white" 
               />
               <TextInput
-                  defaultValue=""
+                  value={props.activity}
                   style={styles.input}
                   onChangeText={props.setActivity}
                   placeholder='Activité sportive'
@@ -120,9 +127,9 @@ function Diagnostic ({navigation}){
                       <View style={styles.modalView}>
                           <Text style={styles.text}>Une archive avec ce nom et cette date existe déjà, si vous continuez elle sera écrasée.Poursuivre permet de modifier une archive.</Text>
                           <View style={styles.buttonContainer}>
-                              <Button  color="#18534F"  onPress={()=>continuer()} title="Continuer"></Button>
-                              <Button   onPress={()=>modify()} title="Poursuivre"></Button>
-                              <Button  color="#A7001E" onPress={()=>setVisible(false)} title="Retour"></Button>
+                            <Button  color="#A7001E" onPress={()=>setVisible(false)} title="Retour"></Button>
+                            <Button   onPress={()=>modify()} title="Poursuivre"></Button>
+                            <Button  color="#18534F"  onPress={()=>continuer()} title="Continuer"></Button>
                           </View>
                       </View>
                   </View>

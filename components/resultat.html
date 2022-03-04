@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <html>
+  <head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+    <style>
+        .body {
+            width:"100%";
+            /* //height:"100%"; */
+            margin:"auto";
+            background-color:"white";
+        }
+      
+        header{
+            flex-direction:'row';
+            width:"100%";
+            padding:15;
+            border:2px solid black;
+            margin-bottom:20;
+            display:flex;
+        }
+        p{
+            padding-left: 10;
+        }
+        .footer{
+            border:2px solid black;
+            height:30;
+            align-items:"center";
+            justify-content;:"center"
+        }
+        .violet{
+            background-color:"#a64d79";
+            width:30;
+            border:2px solid black;
+
+        }
+        .bleu{
+            background-color:"#1155cc";
+            width:30;
+            border:2px solid black;
+        }
+        .imageBackground {
+            background: url("../ressources/téléchargement.png")no-repeat;
+            width: 20%;
+        }
+
+    </style> 
+  </head>
+  <body >
+     
+        <header>
+            <div  >
+                <div style=display:flex;align-items:center ><h2>Date : </h2><p>${props.data[patientId]["date"]}</p></div>
+                <div style=display:flex;align-items:center ><h2>Nom : </h2><p>${props.data[patientId]["name"]}</p></div>
+                <div style=display:flex;align-items:center ><h2>Prénom : </h2><p>${props.data[patientId]["firstName"]}</p></div>
+                <div style=display:flex;align-items:center ><h2>Téléphone : </h2><p>${props.data[patientId]["phone"]}</p></div>
+                <div style=display:flex;align-items:center ><h2>Mail : </h2><p>${props.data[patientId]["email"]}</p></div>
+                <div style=display:flex;align-items:center ><h2>Structure : </h2><p>${props.data[patientId]["structure"]}</p></div>
+                <div style=display:flex;align-items:center ><h2>Activité sportive : </h2><p>${props.data[patientId]["activity"]}</p></div>
+            </div>
+            <div style=display:flex;flex-direction:column;align-items:center;justify-content:center>
+                <div style=display:flex;align-items:center ><h2>Thérapeute 1:</h2><p>Pierre Mounier 06 48 27 36 41</p></div>
+                <div style=display:flex;align-items:center ><h2>Thérapeute 2:</h2><p>Pierre Morey 06 66 59 42 39</p></div>
+            </div>
+            <div class="imageBackground">
+            </div>
+        </header>
+
+        <div  style={styles.firstSection}>
+            <div style={styles.firstArticle}>
+                <div style={styles.titleContainer}><p>Diagnostics:</p></div>
+                <div style={styles.commentsContainer}>
+                {Object.values(props.data[patientId]["diagnostic"]).map((diag;i)=>Object.values(diag).map(p=><p key={i}>{p}</p>))}
+
+                </div>
+            </div>
+
+            <div style={styles.secondArticle}>
+                <div style={styles.firstPart}>
+                    <div style={{flexDirection:"row";height:30}}><div style={styles.violet}></div><p>Problème de stabilité ou de contrôle moteur (SMCD)</p></div>
+                    <div style={{flexDirection:"row";height:30}}><div style={styles.bleu}></div><p>Joint Mobility dysfonciton (JMD) </p></div>
+                    <div style={{flexDirection:"row";height:30}}><div style={styles.bleu}></div><p>Tissue extensibilty dysfonction (TED)</p></div>
+                </div>
+                <div style={{height:20}}></div>
+                <div style={styles.secondPart}>
+                    <div style={styles.paragraphe}><p>Définitions :</p></div>
+                    <div style={styles.paragraphe}><p>SMCD (Violet) : Problème de contrôle moteur ayant pour solution les exercices de renforcements/contôle moteur</p></div>
+                    <div style={styles.paragraphe}><p>JMD (Bleu) : Problème de mobilité articulaire ayant pour solution les étirement articulaires,les mobilisations ou les manipulations</p></div>
+                    <div style={styles.paragraphe}><p>TED (Bleu) : Problème de tension musculaire ayant pour solution les étirement musculaires ou la détente musculaire</p></div>
+                    <div style={styles.paragraphe}><p>Pour tout renseignement complémentaire et demande de rendez vous, nous contacter au:</p></div>
+                </div>
+            </div>
+        </div>
+
+        <div style={styles.secondSection}>
+            <div style={{flex:1}}><ImageBackground  resizeMode="contain" style={styles.corps} source={face}/></div>
+            <div style={{flex:1}}><ImageBackground resizeMode="contain" style={styles.corps} source={dos}/></div>
+        </div>
+        <div style={styles.footer}>
+            <p>Fiche récaputilative propriété de l'Institut Franco Européen de Chiropraxie, tous droit réservés, ne peut être utilisé par un autre professionnel de la santé</p>
+        </div>
+    
+  </body>
+</html>
+</body>
+</html>
