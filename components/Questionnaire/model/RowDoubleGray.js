@@ -132,7 +132,7 @@ const styles = StyleSheet.create({
         alignItems:"center",
         borderTopWidth:1,
         borderTopColor:"#rgba(24,83,79,1)",
-        height:70,
+        height:"auto",
         paddingTop:10,
         fontSize:12,
     },

@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, {useState, useEffect } from 'react';
 import { View, StyleSheet, Button, Platform, Text, Image } from 'react-native';
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
@@ -10,11 +10,86 @@ import { Asset } from 'expo-asset';
 
 
 export default function Resultat() {
-  const props = React.useContext(UserContext); 
-  const patientId= props.name+props.firstName+props.date
+    const props = React.useContext(UserContext); 
+    const patientId= props.name+props.firstName+props.date
 
-  const commentArray=[]
-  {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(p=>commentArray.push(p)))}
+    const commentArray=[]
+    {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(p=>commentArray.push(p)))}
+
+    
+    
+    const [coude,setCoude]=useState("")
+    const [cou,setCou]=useState("")
+    const [epauleHaut,setEpauleHaut]=useState("")
+    const [epauleBas,setEpauleBas]=useState("")
+    const [ventreHaut,setVentreHaut]=useState('')
+    const [ventreHaut2,setVentreHaut2]=useState('')
+    const [ventreHautCote,setVentreHautCote]=useState('')
+    const [ventreHautCentre,setVentreHautCentre]=useState('')
+    const [ventreBasCentre,setVentreBasCentre]=useState('')
+    const [ventreBasCentreCote,setVentreBasCentreCote]=useState('')
+    const [jambeHaut1,setJambeHaut1]=useState('')
+    const [jambeHaut2,setJambeHaut2]=useState('')
+    const [jambeCentre1,setJambeCentre1]=useState('')
+    const [jambeCentre2,setJambeCentre2]=useState('')
+    const [jambeCentre3,setJambeCentre3]=useState('')
+    const [jambeCentre4,setJambeCentre4]=useState('')
+    const [jambeCentre5,setJambeCentre5]=useState('')
+    const [jambeBas,setJambeBas]=useState('')
+    const [pied,setPied]=useState('')
+
+    const [dosNuqueHaut,setDosNuqueHaut]=useState('')
+    const [dosNuqueHautMilieu,setDosNuqueHautMilieu]=useState('')
+    const [dosNuqueHautCote,setDosNuqueHautCote]=useState('')
+    const [dosNuqueBas,setDosNuqueBas]=useState('')
+    const [colonneCentre,setColonneCentre]=useState('')
+    const [colonneGauche,setColonneGauche]=useState('')
+    const [colonneGaucheBas,setColonneGaucheBas]=useState('')
+    const [colonneGaucheBas1,setColonneGaucheBas1]=useState('')
+
+
+    useEffect(() => {
+        commentArray.includes("JMD/TED Flexion du coude") && setCoude("backgroundBlue")
+        commentArray.includes("SMCD muscles fléchisseurs profonds du cou" || "SMCD Flexion cervicale et muscles posturaux du cou") && setCou("backgroundPurple")
+        commentArray.includes("JMD/TED Flexion/adbuction gléno-humérale" || "JMD/TED Extension gléno-humérale") && setEpauleHaut("backgroundBlue")
+        commentArray.includes("SMCD Flexion/abduction Gléno-humérale" || "SMCD des muscles posturaux stabilisateurs d'épaule sur-actifs") && setEpauleHaut("backgroundPurple")
+        commentArray.includes("JMD/TED Extension gléno-humérale") && setEpauleBas("backgroundBlue")
+        commentArray.includes("SMCD muscles de la flexion rachidienne" ||"SMCD Core" ) && setVentreHaut("backgroundPurple")
+        commentArray.includes("SMCD muscles de la flexion rachidienne") && (setVentreHaut2("backgroundPurple"),setVentreHautCentre("backgroundPurple"))
+        commentArray.includes("SMCD core chaine ouverte" ||'SMCD muscles de la flexion rachidienne' || 'SMCD core chaine ouverte') && setVentreHautCote("backgroundPurple")
+        commentArray.includes("SMCD des muscles posturaux membre inf et ceinture pelvienne" ) && setVentreHautCentre("backgroundPurple"), setVentreBasCentre("backgroundPurple")
+        commentArray.includes("JMD ou TED flexion de hanche"|| 'JMD ou TED rotation externe de la CF' || 'JMD ou TED rotation interne de la CF' ) &&  setVentreBasCentreCote("backgroundBlue")
+        commentArray.includes("SMCD des muscles posturaux membre inf et ceinture pelvienne"|| 'SMCD des muscles rotateurs internes de hanche' || 'SMCD des muscles rotateurs externes de hanche' ) &&  setVentreBasCentreCote("backgroundPurple")
+        commentArray.includes("JMD ou TED flexion de hanche"|| 'JMD ou TED rotation externe de la CF'||'JMD ou TED rotation interne de la CF' ) && setJambeHaut1("backgroundBlue")
+        commentArray.includes("SMCD core chaine ouverte"|| 'SMCD muscles de la flexion rachidienne'||'SMCD core chaine ouverte'|| 'SMCD des muscles rotateurs internes de hanche' ||'SMCD des muscles rotateurs externes de hanche' ) && setJambeHaut1("backgroundPurple")
+        commentArray.includes("JMD ou TED flexion de hanche"|| 'JMD ou TED rotation externe de la CF'||'JMD ou TED rotation interne de la CF' ) && setJambeHaut2("backgroundBlue")
+        commentArray.includes("SMCD muscles de la flexion rachidienne"|| 'SMCD core chaine ouverte'||'SMCD core chaine ouverte'|| 'SMCD des muscles rotateurs internes de hanche' || 'SMCD des muscles rotateurs externes de hanche' ) && setJambeHaut2("backgroundPurple")
+        commentArray.includes("JMD membre inf" || 'TED psoas') && setJambeCentre1("backgroundBlue"),setJambeCentre2("backgroundBlue")
+        commentArray.includes("SMCD membre inf") && setJambeCentre1("backgroundPurple"),setJambeCentre5("backgroundPurple")
+        commentArray.includes("SMCD membre inf" || 'SMCD muscles de la flexion rachidienne') && setJambeCentre2("backgroundPurple")
+        commentArray.includes('JMD membre inf') && setJambeCentre3("backgroundBlue"),setJambeCentre4("backgroundBlue"),setJambeCentre5("backgroundBlue")
+        commentArray.includes('SMCD membre inf' || 'TED Quadriceps ou TFL') && setJambeCentre3("backgroundPurple")
+        commentArray.includes('SMCD membre inf' || 'SMCD muscles de la flexion rachidienne') && setJambeCentre4("backgroundPurple")
+        commentArray.includes('SMCD membre inf' || 'TED Quadriceps ou TFL') && setJambeBas("backgroundPurple")
+        commentArray.includes("JMD ou TED dorsiflexion") && setPied("backgroundBlue")
+
+        commentArray.includes("JMD C1,C2 ou TED" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHaut("backgroundBlue")
+        commentArray.includes("JMD basse cervicales, moyennes ou TED" || "JMD/TED cervicale et haute thoracique" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHautMilieu("backgroundBlue")
+        commentArray.includes("SMCD Extension cervicale et muscles posturaux du cou") && setDosNuqueHautMilieu("backgroundPurple")
+        commentArray.includes("JMD/TED Basse et moyennes cervicales uniquement" || "JMD/TED cervicale et haute thoracique" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicalesJMD basse cervicales, moyennes ou TED" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHautMilieu("backgroundBlue")
+        commentArray.includes("SMCD Extension cervicale et muscles posturaux du cou"|| "SMCD des rotateurs du cou"|| "SMCD des muscles extenseurs du cou" || "SMCD des muscles de la rotation du coup") && setDosNuqueHautMilieu("backgroundPurple")
+        commentArray.includes("JMD/TED cervicale et haute thoracique") && setDosNuqueBas("backgroundBlue")
+        commentArray.includes("SMCD des muscles extenseurs du cou") && setDosNuqueBas("backgroundPurple")
+        commentArray.includes("JMD/TED Extension/rotation thoracique") && setColonneCentre("backgroundBlue")
+        commentArray.includes("SMCD Extension/Rotation thoracique") && setColonneCentre("backgroundPurple")
+        commentArray.includes("JMD/TED flexion du rachis") && setColonneGauche("backgroundBlue")
+        commentArray.includes("SMCD des muscles postauraux" || 'SMCD des muscles extenseurs rachidiens' ||'SMCD des muscles interscapulaires') && setColonneGauche("backgroundPurple")
+        commentArray.includes("JMD/TED flexion du rachis") && setColonneGaucheBas("backgroundBlue")
+        commentArray.includes("SMCD des muscles postauraux" || 'SMCD des muscles extenseurs rachidiens') && setColonneGaucheBas("backgroundPurple"),setColonneGaucheBas1("backgroundPurple")
+        commentArray.includes("JMD/TED flexion du rachis" ||'"JMD ou TED rotation lombaire') && setColonneGaucheBas1("backgroundBlue")
+    
+    }, [])
+    
 
   async function generateHTML() {
     const asset = Asset.fromModule(require('../ressources/téléchargement.png'));
@@ -164,7 +239,6 @@ export default function Resultat() {
               position:absolute;
               top:70px;
               left:235px;
-              background-color:#a64d79;
   
           }
           .epaule1{
@@ -173,7 +247,6 @@ export default function Resultat() {
               position:absolute;
               top:100px;
               left:185px;
-              background-color:#a64d79;
   
           }
           .epaule2{
@@ -182,7 +255,6 @@ export default function Resultat() {
               position:absolute;
               top:120px;
               left:195px;
-              background-color:#a64d79;
   
           }
           .epaule3{
@@ -191,7 +263,6 @@ export default function Resultat() {
               position:absolute;
               top:100px;
               right:185px;
-              background-color:#a64d79;
   
           }
           .epaule4{
@@ -200,7 +271,6 @@ export default function Resultat() {
               position:absolute;
               top:120px;
               right:195px;
-              background-color:#a64d79;
   
           }
           .ventreHaut{
@@ -209,7 +279,6 @@ export default function Resultat() {
               position:absolute;
               top:140px;
               left:235px;
-              background-color:green;
           }
           .ventreHaut2{
               width:30px;
@@ -217,7 +286,6 @@ export default function Resultat() {
               position:absolute;
               top:190px;
               left:235px;
-              background-color:yellow;
           }
           .ventreHautCote1{
               width:15px;
@@ -225,7 +293,6 @@ export default function Resultat() {
               position:absolute;
               top:190px;
               left:220px;
-              background-color:blue;
           }
           .ventreHautCote2{
               width:15px;
@@ -233,7 +300,6 @@ export default function Resultat() {
               position:absolute;
               top:190px;
               right:220px;
-              background-color:blue;
           }
           .ventreHautCentre{
               width:30px;
@@ -241,7 +307,6 @@ export default function Resultat() {
               position:absolute;
               top:205px;
               right:235px;
-              background-color:pink;
           }
           .ventreBasCentre{
               width:30px;
@@ -249,7 +314,6 @@ export default function Resultat() {
               position:absolute;
               top:235px;
               right:235px;
-              background-color:red;
           }
           .ventreBasCentreGauche{
               width:15px;
@@ -607,7 +671,7 @@ export default function Resultat() {
               position:absolute;
               top:165px;
               left:150px;
-              background-color:yellow; 
+            
           }
           .coudeDroite{
               width:30px;
@@ -615,7 +679,7 @@ export default function Resultat() {
               position:absolute;
               top:165px;
               right:150px;
-              background-color:yellow; 
+          
           }
           .dosGauche1{
               width:10px;
@@ -746,11 +810,12 @@ export default function Resultat() {
   
           <div class=secondSection>
               <div class=face>
-                  <div class="cou"></div>
-                  <div class="epaule1"></div>
-                  <div class="epaule2"></div>
-                  <div class="epaule3"></div>
-                  <div class="epaule4"></div>
+                  <div class="cou ${cou}"></div>
+
+                  <div class="epaule1 ${epauleHaut}"></div>
+                  <div class="epaule2 ${epauleBas}"></div>
+                  <div class="epaule3 ${epauleHaut}"></div>
+                  <div class="epaule4 ${epauleBas}"></div>
                   <div class="ventreHaut"></div>
                   <div class="ventreHaut2"></div>
                   <div class="ventreHautCote1"></div>
@@ -807,8 +872,8 @@ export default function Resultat() {
                   <div class="molletDroit"></div>
   
   
-                  <div class="coudeGauche"></div>
-                  <div class="coudeDroite"></div>
+                  <div class="coudeGauche ${coude}"></div>
+                  <div class="coudeDroite ${coude}"></div>
   
                   <div class="dosGauche1"></div>
                   <div class="dosGauche2"></div>

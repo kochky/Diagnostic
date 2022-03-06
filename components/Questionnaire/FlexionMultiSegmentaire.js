@@ -30,7 +30,7 @@ function FlexionMultiSegmentaire({navigation}){
             <View style={styles.view}>
                 <RowSuperior/>
                 <RowFourCheckbox title={title} text={"Flexion multi-segmentaire"}/>
-                <RowFourCheckbox title={title} text={"Flexion multi-ségmentaire en décharge"}/>
+                <RowFourCheckbox title={title} text={"Flexion multi-segmentaire en décharge"}/>
                 <RowDoubleGray title={title} text="Flexion membre inf en décharge" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Ajout de la dorsiflexion de cheville" firstCase="Actif=Passif" secondCase="Aggravation"/>
                 <RowFourCheckbox title={title} text={"Oeuf (rachis en flexion)"}/>
