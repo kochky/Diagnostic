@@ -59,9 +59,10 @@ function Fms({navigation}){
             <RowFMS text="Le Trunk Stability Push-up" />
             <RowFMS text="Le Shoulder Mobility" />
             <RowFMS text="Le Rotary Stability " />
-            {hidden ? <Text>Score:Finissez les tests pour voir le score</Text>:<Text>Score: {result}</Text>}
+            {hidden ? <Text style={{color:"blue"}}>Score: Finissez les tests pour voir le score</Text>:<Text style={{color:"blue"}}>Score: {result}</Text>}
             <View style={styles.buttonContainer}>
                <Button
+               color="#rgba(24,83,79,1)"
                title="Résultat"
                onPress={()=> navigation.navigate('Resultat')}
                />
@@ -113,6 +114,9 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
     },
+    buttonContainer:{
+        marginTop:30,
+    }
 });
 
 export default Fms

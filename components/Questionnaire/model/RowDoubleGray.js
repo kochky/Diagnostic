@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from 'react-native';
-import { CheckBox, Icon } from 'react-native-elements';
+import { CheckBox } from 'react-native-elements';
 import React, { useState, useEffect } from 'react'
 import { UserContext } from '../../../Context'
 import commentaireGrisArray from '../../ressources/commentaireGrisArray';
@@ -96,13 +96,13 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
     return(
         <View style={styles.container}>
             <View style={styles.firstrow}>
-                <Text style={{flex:1.5}}></Text>
-                <Text style={{flex:2,alignItems:'center',fontWeight:"bold",fontSize:12}}> {firstCase} </Text>
-                <Text style={{flex:2,alignItems:'center',fontWeight:"bold",fontSize:12}}> {secondCase} </Text>
+                <Text style={{flex:2}}></Text>
+                <Text style={{flex:2,alignItems:'center',fontWeight:"bold",fontSize:12,textAlign:"center"}}> {firstCase} </Text>
+                <Text style={{flex:2,alignItems:'center',fontWeight:"bold",fontSize:12,textAlign:"center"}}> {secondCase} </Text>
             </View>
 
             <View style={styles.row}>
-                <Text style={{flex:1.5,textAlign:"left"}}>{text}</Text>
+                <Text style={{flex:2,textAlign:"left"}}>{text}</Text>
                 
                 <View   style={{flex:2,alignItems:'center'}}>
                     <CheckBox 
@@ -132,16 +132,17 @@ const styles = StyleSheet.create({
         alignItems:"center",
         borderTopWidth:1,
         borderTopColor:"#rgba(24,83,79,1)",
-        height:50,
+        height:70,
         paddingTop:10,
-        fontSize:12
+        fontSize:12,
     },
     firstrow:{
         flex:1,
         flexDirection:"row",
         textAlign:"center",
-        alignItems:"center",
-        height:50,
+        alignItems:"flex-end",
+        justifyContent:"flex-end",
+        height:"auto",
         paddingBottom:10
 
     },

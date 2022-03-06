@@ -4,7 +4,7 @@ function RowSuperior(){
 
     return(
         <View style={styles.row}>
-            <View style={{flex:1.5}}></View>
+            <View style={{flex:2}}></View>
             <Text style={{flex:0.5}}></Text>
             <Text style={styles.green}>FND</Text>
             <Text style={styles.red}>FD</Text>
@@ -18,16 +18,20 @@ function RowSuperior(){
 
 const styles = StyleSheet.create({
     row:{
-        flex:0.5,
+        flex:1,
         flexDirection:"row",
         textAlign:'center',
         alignItems:"center",
-        fontWeight:"bold"
+        fontWeight:"bold",
+        width: '100%',
+
     },
     green:{
         flex:1,
         backgroundColor:"#75BB99",
-        fontWeight:"bold"
+        fontWeight:"bold",
+        textAlign:'center',
+
 
     },
     red:{

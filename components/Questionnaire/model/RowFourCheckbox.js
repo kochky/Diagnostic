@@ -34,6 +34,7 @@ function RowFourCheckbox({title,text}){
                     [title]:{...data[patientId][title]
                     ,[text]:value}
                 }}))
+
             if(text.toString()==="Oeuf (rachis en flexion)"){
                 if(value===1){
                     setComment("SMCD muscles de la flexion rachidienne")
@@ -66,7 +67,8 @@ function RowFourCheckbox({title,text}){
                     }}}))
 
                 }
-            }else if(text.toString()==="Ligne GH-GH- Coude" ) {
+            }
+            else if(text.toString()==="Ligne GH-GH- Coude" ) {
                 if(value!=0 && value !=1){
                     setComment("voir appley sup")
                         props.setData(data=>({...data,
@@ -86,6 +88,27 @@ function RowFourCheckbox({title,text}){
                         }
                 }}))
                 }
+            }else if (text.toString()==="Deep squat" ){
+                if(value!=0 && value !=1){
+                    setComment("faire assisté")
+                        props.setData(data=>({...data,
+                            [patientId]:{...data[patientId],
+                                ["diagnostic"]:{...data[patientId]["diagnostic"],
+                                    [title]:{...data[patientId]["diagnostic"][title],
+                                        [text]:"faire assisté"
+                        }}}}))
+                }else {
+                        setComment()
+                    const copy= props.data[patientId]["diagnostic"][title]
+                    delete copy[text]
+                    props.setData(data=>({...data,
+                    [patientId]:{...data[patientId],
+                        ["diagnostic"]:{...data[patientId]["diagnostic"],
+                            [title]:copy
+                        }
+                }}))
+                }
+
             }  
             
             commentaireArray.map((commentaire)=>{if (Object.keys(commentaire).toString()===text.toString() && value===1){
@@ -131,8 +154,8 @@ function RowFourCheckbox({title,text}){
     return(
         <View>
             <View style={styles.row}>
-                <Text style={{flex:2,marginRight:20}}>{text}</Text>
-                <View   style={styles.view}>
+                <Text style={{flex:2}}>{text}</Text>
+                <View style={styles.view}>
                     <Slider
                         value={value}
                         onValueChange={setValue}
@@ -170,7 +193,7 @@ const styles = StyleSheet.create({
         flex:1,
         flexDirection:"row",
         alignItems:"center",
-        height:60,
+        height:"auto",
         
     },
     view:{

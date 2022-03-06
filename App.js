@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './Context'
-import Test from './components/Test';
+import Test from './components/Resultat';
 
 
 import Menu from './components/Menu';
@@ -75,7 +75,6 @@ export default function App() {
         <Stack.Screen name="FMS" component={Fms} />
         <Stack.Screen name="Resultat" component={Resultat} />
         <Stack.Screen name="Archives" component={Archives} />
-        <Stack.Screen name="Test" component={Test} />
 
         </Stack.Navigator>
       </NavigationContainer>

@@ -58,12 +58,13 @@ function OverheadDeepSquat({navigation}){
                 <RowSuperior/>
                 <RowFourCheckbox title={title} text={"Overhead deep squat"}/>
                 <RowDoubleGray title={title} text="Stabilisé" firstCase="Mieux" secondCase="Pas mieux"/>
-                <Text>Upper Body /  Tronc</Text>
+                <Text style={styles.title}>Upper Body /  Tronc</Text>
+                <RowSuperior/>
                 <RowFourCheckbox title={title} text={"Ligne GH-GH- Coude"}/>
                 <RowDoubleGray title={title} text="Lumbar lock" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Dwerk" firstCase="" secondCase="Sonnette latérale ou décollement scapulaire"/>
                 <RowDoubleGray title={title}text="Sphynx (30°)" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-                <Text>Lower Body </Text>
+                <Text style={styles.title}>Lower Body </Text>
                 <RowDoubleGray title={title}text="Chevalier servant " firstCase="Limité" secondCase="Pas stable"/>
                 <RowDoubleGray title={title} text="Genou - poitrine " firstCase="Limité" secondCase="Pas limité"/>
                 <RowDoubleGray title={title} text="Genou - poitrine avec les mains sous les genoux" firstCase="Limité" secondCase="Pas limité"/>
@@ -104,7 +105,16 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+    },   
+    title:{
+        fontWeight:"bold",
+        fontSize:16,
+        color:"blue",
+        marginBottom:10,
+        marginTop:20
+
     },
+    
     buttonContainer:{
         backgroundColor:"#rgba(24,83,79,1)",
         width:50,

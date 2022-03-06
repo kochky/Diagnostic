@@ -1,4 +1,4 @@
-import { StyleSheet, View,Pressable } from 'react-native';
+import { StyleSheet,Text, View,Pressable,ScrollView } from 'react-native';
 import React, { useEffect } from 'react'
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -26,18 +26,20 @@ function DeepSquat({navigation}){
   
       
     return(
-        
-        <View style={styles.view}>
-            <RowSuperior/>
-            <RowFourCheckbox title={title} text={"Deep squat"}/>
-            <RowDoubleGray title={title} text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>
-            <View style={styles.buttonContainer}>
-                <Pressable onPress={()=> navigation.navigate('FMS')}>
-                    <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
-                </Pressable>
-            </View>
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
 
-        </View>       
+            <View style={styles.view}>
+                <RowSuperior/>
+                <RowFourCheckbox title={title} text={"Deep squat"}/>
+                <RowDoubleGray title={title} text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>
+                <View style={styles.buttonContainer}>
+                    <Pressable onPress={()=> navigation.navigate('FMS')}>
+                        <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                    </Pressable>
+                </View>
+
+            </View>       
+        </ScrollView>    
 
     )
 

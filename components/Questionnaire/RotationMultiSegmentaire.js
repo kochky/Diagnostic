@@ -58,11 +58,14 @@ function RotationMultiSegmentaire({navigation}){
                 <RowSuperior/>
                 <RowFourCheckbox title={title} text={"Rotation multi-ségmentaire "}/>
                 <RowDoubleGray title={title} text="Décharge" firstCase="Limité" secondCase="Pas limité"/>
-                <Text> Membre sup (Rotation rachidienne)</Text>
+                <Text style={styles.title}> Membre sup (Rotation rachidienne)</Text>
+                <RowSuperior/>
+
                 <RowFourCheckbox title={title} text={"Ligne GH-GH- Coude"}/>
                 <RowDoubleGray title={title} text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Dwerk" firstCase="" secondCase="Sonnette latérale ou décollement scapulaire"/>
-                <Text>Membre inf</Text>
+                <Text style={styles.title}>Membre inf</Text>
+                
                 <RowDoubleGray title={title} text="Rotation interne de hanche" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Rotation externe de hanche " firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Rotatation interne fémoro-tibiales" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
@@ -98,6 +101,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
+    },
+    title:{
+        fontWeight:"bold",
+        fontSize:16,
+        color:"blue",
+        marginBottom:10,
+        marginTop:20
+
     },
     buttonContainer:{
         backgroundColor:"#rgba(24,83,79,1)",

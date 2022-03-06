@@ -30,7 +30,7 @@ function Archives({navigation}){
         props.setEmail(patient.email)
         props.setStructure(patient.structure)
         props.setActivity(patient.activity)
-        navigation.navigate('Test')
+        navigation.navigate('Resultat')
 
     }
 
@@ -67,7 +67,7 @@ function Archives({navigation}){
                             </View>
                             <View style={styles.buttonContainer}>
                                 <Button  color="#A7001E" title="Effacer" onPress={()=>deletePatient(patient.name+patient.firstName+patient.date)}></Button>
-                                <Button color="#18534F" title="Modifier" onPress={()=>handlePress(patient)}></Button>
+                                <Button  title="Modifier" onPress={()=>handlePress(patient)}></Button>
                                 <Button color="#18534F" title="Compte rendu" onPress={()=>toResult(patient)}></Button>
                             </View>
                     </View> 

@@ -1,194 +1,912 @@
-import { StyleSheet, Text, View,ImageBackground,TextInput,Button,ScrollView,Image } from 'react-native';
-import React,{ useEffect } from 'react';
+import * as React from 'react';
+import { View, StyleSheet, Button, Platform, Text, Image } from 'react-native';
+import * as Print from 'expo-print';
+import { shareAsync } from 'expo-sharing';
 import { UserContext } from '../Context'
-import image from '../ressources/téléchargement.png'
-import face from "../ressources/face.png"
-import dos from "../ressources/dos.png"
+import { manipulateAsync } from 'expo-image-manipulator';
+import { Asset } from 'expo-asset';
 
 
-function Resultat({navigation}){
-    const props = React.useContext(UserContext); 
-    const patientId= props.name+props.firstName+props.date
+
+
+export default function Resultat() {
+  const props = React.useContext(UserContext); 
+  const patientId= props.name+props.firstName+props.date
+
+  const commentArray=[]
+  {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(p=>commentArray.push(p)))}
+
+  async function generateHTML() {
+    const asset = Asset.fromModule(require('../ressources/téléchargement.png'));
+    const image = await manipulateAsync(
+      asset.localUri ?? asset.uri,
+      [],
+      { base64: true }
+    );
+    const asset1 = Asset.fromModule(require('../ressources/dos.png'));
+    const image1 = await manipulateAsync(
+      asset1.localUri ?? asset1.uri,
+      [],
+      { base64: true }
+    );
+    const asset2 = Asset.fromModule(require('../ressources/face.png'));
+    const image2 = await manipulateAsync(
+      asset2.localUri ?? asset2.uri,
+      [],
+      { base64: true }
+    );
+
+  return `
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+  </head>
+  <body>
+      <html>
+    <head>
+      <meta name="viewport" content="width=device-width,initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+      <style>
+          *{
+              margin:0;
+              padding:0;
+              margin-block:0;
+              box-sizing: border-box;
+              -webkit-print-color-adjust: exact !important;   
+              color-adjust: exact !important;                
+  
+          }
+          body {
+              width:1000px;
+              max-height:1500px;
+              /* //height:"100%"; */
+              margin:auto;
+              background-color:white;
+          }
+        
+          header{
+              flex-direction:'row';
+              width:"100%";
+              border:2px solid black;
+              margin-bottom:20;
+              display:flex;
+              height:220px;
+              justify-content: space-between;
+          }
+          p{
+              padding-left: 10px;
+              margin:0;
+              display:inline
+          }
+          footer{
+              border:2px solid black;
+              height:30;
+              align-items:center;
+              justify-content:center;
+              text-align: center;
+              bottom:0;
+              position:absolute;
+          }
+          .violet{
+              background-color:#a64d79;
+              width:30px;
+              height:30px;
+  
+          }
+          .bleu{
+              background-color:#1155cc;
+              width:30px;
+              height:30px;
+          }
+          .imageBackground {
+              background: url("data:image/jpeg;base64,${image.base64}")no-repeat;
+              background-position: center;
+              width: 20%;
+              border-left:2px solid black;
+              height:100%;
+          }
+          .firstSection{
+              display:flex;
+              margin-top:20px;
+              justify-content: space-around;
+              margin-bottom:20px;
+              height:500px
+          }
+          .titleContainer{
+              border:1px solid black
+          }
+          .commentsContainer{
+              border:1px solid black;
+              height:auto
     
-    
-    return (
-        <ScrollView contentContainerStyle={{flexGrow:1}}>
+          }
+          .firstArticle {
+              width:49%
+          }
+          .secondArticle{
+              width:49%;
+              display:flex;
+              flex-direction: column;
+              /* justify-content: space-around; */
+          }
+          .firstPart {
+              border:1px solid black;
+          }
+          .secondPart {
+              border:1px solid black;
+              padding:15px;
+              box-sizing: border-box;
+          }
+          .paragraphe {
+              margin-bottom:10px
+          }
+          .secondSection {
+              display:flex;
+              justify-content: space-around;
+              align-items: center;
+              margin-bottom: 20px;
+              height:500px
+          }
+          .face {
+              background: url("data:image/jpeg;base64,${image2.base64}")no-repeat;
+              background-position: center;
+              background-size: contain;
+              height:500px;
+              width:500px;
+              position:relative;
+          }
+          .cou {
+              width:30px;
+              height:30px;
+              position:absolute;
+              top:70px;
+              left:235px;
+              background-color:#a64d79;
+  
+          }
+          .epaule1{
+              width:30px;
+              height:30px;
+              position:absolute;
+              top:100px;
+              left:185px;
+              background-color:#a64d79;
+  
+          }
+          .epaule2{
+              width:30px;
+              height:30px;
+              position:absolute;
+              top:120px;
+              left:195px;
+              background-color:#a64d79;
+  
+          }
+          .epaule3{
+              width:30px;
+              height:30px;
+              position:absolute;
+              top:100px;
+              right:185px;
+              background-color:#a64d79;
+  
+          }
+          .epaule4{
+              width:30px;
+              height:30px;
+              position:absolute;
+              top:120px;
+              right:195px;
+              background-color:#a64d79;
+  
+          }
+          .ventreHaut{
+              width:30px;
+              height:50px;
+              position:absolute;
+              top:140px;
+              left:235px;
+              background-color:green;
+          }
+          .ventreHaut2{
+              width:30px;
+              height:15px;
+              position:absolute;
+              top:190px;
+              left:235px;
+              background-color:yellow;
+          }
+          .ventreHautCote1{
+              width:15px;
+              height:45px;
+              position:absolute;
+              top:190px;
+              left:220px;
+              background-color:blue;
+          }
+          .ventreHautCote2{
+              width:15px;
+              height:45px;
+              position:absolute;
+              top:190px;
+              right:220px;
+              background-color:blue;
+          }
+          .ventreHautCentre{
+              width:30px;
+              height:30px;
+              position:absolute;
+              top:205px;
+              right:235px;
+              background-color:pink;
+          }
+          .ventreBasCentre{
+              width:30px;
+              height:20px;
+              position:absolute;
+              top:235px;
+              right:235px;
+              background-color:red;
+          }
+          .ventreBasCentreGauche{
+              width:15px;
+              height:20px;
+              position:absolute;
+              top:235px;
+              left:205px;
+              background-color:pink;
+          }
+          .ventreBasCentreDroite{
+              width:15px;
+              height:20px;
+              position:absolute;
+              top:235px;
+              right:205px;
+              background-color:pink;
+          }
+          .jambeHaut1Gauche{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:235px;
+              left:220px;
+              background-color:orange;
+  
+          }
+          .jambeHaut1Droite{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:235px;
+              right:220px;
+              background-color:orange;
+  
+          }
+          .jambeHaut2Gauche{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:245px;
+              left:220px;
+              background-color:purple;
+  
+          }
+          .jambeHaut2Droite{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:245px;
+              right:220px;
+              background-color:purple;
+  
+          }
+          .jambeCentreDroite1{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:250px;
+              right:205px;
+              background-color:green;
+          }
+          .jambeCentreGauche1{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:250px;
+              left:205px;
+              background-color:green;
+          }
+          .jambeCentreDroite2{
+              position:absolute;
+              width:15px;
+              height:20px;
+              top:255px;
+              right:220px;
+              background-color:red;
+          }
+          .jambeCentreGauche2{
+              position:absolute;
+              width:15px;
+              height:20px;
+              top:255px;
+              left:220px;
+              background-color:red;
+          }
+          .jambeCentreDroite3{
+              position:absolute;
+              width:15px;
+              height:30px;
+              top:260px;
+              left:205px;
+              background-color:yellow;
+          }
+          .jambeCentreGauche3{
+              position:absolute;
+              width:15px;
+              height:30px;
+              top:260px;
+              right:205px;
+              background-color:yellow;
+          }
+          .jambeCentreGauche4{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:270px;
+              left:220px;
+              background-color:gray;
+          }
+          .jambeCentreDroite4{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:270px;
+              right:220px;
+              background-color:gray;
+          }
+          .jambeCentreDroite5{
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:280px;
+              right:220px;
+              background-color:blue;
+          }
+          .jambeCentreGauche5 {
+              position:absolute;
+              width:15px;
+              height:10px;
+              top:280px;
+              left:220px;
+              background-color:blue;
+          }
+          .jambeBasDroite {
+              position:absolute;
+              width:15px;
+              height:20px;
+              top:290px;
+              right:205px;
+              background-color:yellow;
+          }
+          .jambeBasGauche {
+              position:absolute;
+              width:15px;
+              height:20px;
+              top:290px;
+              left:205px;
+              background-color:yellow;
+          }
+          .piedGauche{
+              position:absolute;
+              width:20px;
+              height:20px;
+              top:465px;
+              left:175px;
+              background-color:yellow;
+          }
+          .piedDroit{
+              position:absolute;
+              width:20px;
+              height:20px;
+              top:465px;
+              right:175px;
+              background-color:yellow;
+          }
+  
+  
+          .dos{
+              background: url("data:image/jpeg;base64,${image1.base64}")no-repeat; ;
+              background-position: center;
+              background-size: contain;
+              height:500px;
+              width:500px;
+              position:relative;
+          }
+          .dosNuqueHaut{
+              width:30px;
+              height:10px;
+              position:absolute;
+              top:60px;
+              left:235px;
+              background-color:#a64d79;
+          }
+          .dosNuqueHautMilieu{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:70px;
+              left:245px;
+              background-color:#a64d79;
+          }
+          .dosNuqueHautGauche{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:70px;
+              left:235px;
+              background-color:#a64d79;
+          }
+          .dosNuqueHautDroite{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:70px;
+              right:235px;
+              background-color:#a64d79;
+          }
+          .dosNuqueBas{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:80px;
+              left:245px;
+              background-color:red;
+          }
+          .colonneCentre{
+              width:10px;
+              height:80px;
+              position:absolute;
+              top:90px;
+              left:245px;
+              background-color:#a64d79;
+          }
+          .colonneGauche{
+              width:10px;
+              height:50px;
+              position:absolute;
+              top:100px;
+              left:235px;
+              background-color:blue;
+          }
+          .colonneDroite{
+              width:10px;
+              height:50px;
+              position:absolute;
+              top:100px;
+              right:235px;
+              background-color:blue;
+          }
+          .colonneGaucheBas{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:150px;
+              left:235px;
+              background-color:green;
+          }
+          .colonneDroiteBas{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:150px;
+              right:235px;
+              background-color:green;
+          }
+          .colonneGaucheBas1{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:160px;
+              left:235px;
+              background-color:red;
+          }
+          .colonneDroiteBas1{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:160px;
+              right:235px;
+              background-color:red;
+          }
+          .colonneGaucheBas2{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:180px;
+              left:235px;
+              background-color:blue;
+          }
+          .colonneDroiteBas2{
+              width:10px;
+              height:10px;
+              position:absolute;
+              top:180px;
+              right:235px;
+              background-color:blue;
+          }
+          .colonneGaucheToutBas{
+              width:10px;
+              height:30px;
+              position:absolute;
+              top:160px;
+              left:225px;
+              background-color:yellow;
+          }
+          .colonneDroiteToutBas{
+              width:10px;
+              height:30px;
+              position:absolute;
+              top:160px;
+              right:225px;
+              background-color:yellow;
+          }
+          .fesseGauche1{
+              width:30px;
+              height:15px;
+              position:absolute;
+              top:220px;
+              left:200px;
+              background-color:yellow;
+          }
+          .fesseGauche2{
+              width:30px;
+              height:15px;
+              position:absolute;
+              top:235px;
+              left:200px;
+              background-color:yellow;
+          }
+          .fesseDroite1{
+              width:30px;
+              height:15px;
+              position:absolute;
+              top:220px;
+              right:200px;
+              background-color:yellow;
+          }
+          .fesseDroite2{
+              width:30px;
+              height:15px;
+              position:absolute;
+              top:235px;
+              right:200px;
+              background-color:yellow;
+          }
+          .molletGauche{
+              width:15px;
+              height:70px;
+              position:absolute;
+              top:355px;
+              left:195px;
+              background-color:yellow;
+          }
+          .molletDroit{
+              width:15px;
+              height:70px;
+              position:absolute;
+              top:355px;
+              right:195px;
+              background-color:yellow;
+          }
+          .coudeGauche{
+              width:30px;
+              height:10px;
+              position:absolute;
+              top:165px;
+              left:150px;
+              background-color:yellow; 
+          }
+          .coudeDroite{
+              width:30px;
+              height:10px;
+              position:absolute;
+              top:165px;
+              right:150px;
+              background-color:yellow; 
+          }
+          .dosGauche1{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:120px;
+              left:225px;
+              background-color:green;
+  
+          }
+          .dosDroite1{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:120px;
+              right:225px;
+              background-color:green;
+  
+          }
+          .dosGauche2{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:100px;
+              left:215px;
+              background-color:red;
+  
+          }
+          .dosDroite2{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:100px;
+              right:215px;
+              background-color:red;
+  
+          }
+          .dosGauche3{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:120px;
+              left:215px;
+              background-color:blue;
+  
+          }
+          .dosDroite3{
+              width:10px;
+              height:20px;
+              position:absolute;
+              top:120px;
+              right:215px;
+              background-color:blue;
+  
+          }
+          .dosGauche4{
+              width:20px;
+              height:20px;
+              position:absolute;
+              top:120px;
+              left:195px;
+              background-color:green;
+  
+          }
+          .dosDroite4{
+              width:20px;
+              height:20px;
+              position:absolute;
+              top:120px;
+              right:195px;
+              background-color:green;
+  
+          }
+          .backgroundBlue{
+            background-color:#1155cc;
+          }
+          .backgroundPurple{
+            background-color:#a64d79;
 
-            {/* <View style={styles.container}>
-                <View style={styles.header}>
-                    <View style={{flex:3}}>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Date : </Text><Text style={styles.info}>{props.data[patientId]["date"]}</Text></View>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Nom : </Text><Text style={styles.info}>{props.data[patientId]["name"]}</Text></View>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Prénom : </Text><Text style={styles.info}>{props.data[patientId]["firstName"]}</Text></View>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Téléphone : </Text><Text style={styles.info}>{props.data[patientId]["phone"]}</Text></View>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Mail : </Text><Text style={styles.info}>{props.data[patientId]["email"]}</Text></View>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Structure : </Text><Text style={styles.info}>{props.data[patientId]["structure"]}</Text></View>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Activité sportive : </Text><Text style={styles.info}>{props.data[patientId]["activity"]}</Text></View>
-                    </View>
-                    <View style={{flex:2,justifyContent:"center"}}>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Thérapeute 1:</Text><Text style={styles.info}>Pierre Mounier 06 48 27 36 41</Text></View>
-                        <View style={{flexDirection:"row"}}><Text style={styles.title}>Thérapeute 2:</Text><Text style={styles.info}>Pierre Morey 06 66 59 42 39</Text></View>
-                    </View>
-                    <View style={{flex:1}}>
-                        <ImageBackground  source={image} resizeMode="contain" style={styles.image}/>
-                    </View>
-                </View>
+          }
+      </style> 
+    </head>
+    <body >
+       
+          <header>
+              <div style=width:50%;padding:15px>
+                  <div style=display:flex;align-items:center ><h3>Date : </h3><p>${props.data[patientId]["date"]}</p></div>
+                  <div style=display:flex;align-items:center ><h3>Nom : </h3><p>${props.data[patientId]["name"]}</p></div>
+                  <div style=display:flex;align-items:center ><h3>Prénom : </h3><p>${props.data[patientId]["firstName"]}</p></div>
+                  <div style=display:flex;align-items:center ><h3>Téléphone : </h3><p>${props.data[patientId]["phone"]}</p></div>
+                  <div style=display:flex;align-items:center ><h3>Mail : </h3><p>${props.data[patientId]["email"]}</p></div>
+                  <div style=display:flex;align-items:center ><h3>Structure : </h3><p>${props.data[patientId]["structure"]}</p></div>
+                  <div style=display:flex;align-items:center ><h3>Activité sportive : </h3><p>${props.data[patientId]["activity"]}</p></div>
+              </div>
+              <div style=width:40%;display:flex;flex-direction:column;align-items:center;justify-content:center>
+                  <div style=display:flex;margin-bottom:20px><h3>Thérapeute 1:</h3><div style=display:flex;flex-direction:column><p>Pierre Mounier</p> <p>06 48 27 36 41</p></div></div>
+                  <div style=display:flex ><h3>Thérapeute 2:</h3><div style=display:flex;flex-direction:column><p>Pierre Morey </p><p>06 66 59 42 39</p></div></div>
+              </div>
+              <div class="imageBackground">
+              </div>
+          </header>
+  
+          <div  class=firstSection>
+              <div class=firstArticle>
+                  <div class=titleContainer><p>Diagnostics:</p></div>
+                  <div class=commentsContainer>
+                  ${commentArray.map(item=>`<div>${item}</div>`.trim()).join('')}
 
-                <View  style={styles.firstSection}>
-                    <View style={styles.firstArticle}>
-                        <View style={styles.titleContainer}><Text style={styles.title}>Diagnostics:</Text></View>
-                        <View style={styles.commentsContainer}>
-                        {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(text=><Text key={i}>{text}</Text>))}
+                  </div>
+              </div>
+  
+              <div class=secondArticle>
+                  <div class=firstPart>
+                      <div style=height:30px;display:flex;align-items:center><div class=violet></div><p>Problème de stabilité ou de contrôle moteur (SMCD)</p></div>
+                      <div style=height:30px;display:flex;align-items:center><div class=bleu></div><p>Joint Mobility dysfonciton (JMD) </p></div>
+                      <div style=height:30px;display:flex;align-items:center><div class=bleu></div><p>Tissue extensibilty dysfonction (TED)</p></div>
+                  </div>
+                  <div style=height:20px></div>
+                  <div class=secondPart>
+                      <div class=paragraphe><p>Définitions :</p></div>
+                      <div class=paragraphe><p>SMCD (Violet) : Problème de contrôle moteur ayant pour solution les exercices de renforcements/contôle moteur</p></div>
+                      <div class=paragraphe><p>JMD (Bleu) : Problème de mobilité articulaire ayant pour solution les étirement articulaires,les mobilisations ou les manipulations</p></div>
+                      <div class=paragraphe><p>TED (Bleu) : Problème de tension musculaire ayant pour solution les étirement musculaires ou la détente musculaire</p></div>
+                      <div class=paragraphe><p>Pour tout renseignement complémentaire et demande de rendez vous, nous contacter au:</p></div>
+                  </div>
+              </div>
+          </div>
+  
+          <div class=secondSection>
+              <div class=face>
+                  <div class="cou"></div>
+                  <div class="epaule1"></div>
+                  <div class="epaule2"></div>
+                  <div class="epaule3"></div>
+                  <div class="epaule4"></div>
+                  <div class="ventreHaut"></div>
+                  <div class="ventreHaut2"></div>
+                  <div class="ventreHautCote1"></div>
+                  <div class="ventreHautCote2"></div>
+                  <div class="ventreHautCentre"></div>
+                  <div class="ventreBasCentre"></div>
+                  <div class="ventreBasCentreGauche"></div>
+                  <div class="ventreBasCentreDroite"></div>
+                  <div class="jambeHaut1Gauche"></div>
+                  <div class="jambeHaut1Droite"></div>
+                  <div class="jambeHaut2Gauche"></div>
+                  <div class="jambeHaut2Droite"></div>
+                  
+                  <div class="jambeCentreDroite1"></div>
+                  <div class="jambeCentreDroite2"></div>
+                  <div class="jambeCentreDroite3"></div>
+                  <div class="jambeCentreDroite4"></div>
+                  <div class="jambeCentreDroite5"></div>
+                  <div class="jambeCentreGauche1"></div>
+                  <div class="jambeCentreGauche2"></div>
+                  <div class="jambeCentreGauche3"></div>
+                  <div class="jambeCentreGauche4"></div>
+                  <div class="jambeCentreGauche5"></div>
+  
+                  <div class="jambeBasGauche"></div>
+                  <div class="jambeBasDroite"></div>
+                  
+                  <div class="piedGauche"></div>
+                  <div class="piedDroit"></div>
+              </div>
+              <div class=dos >
+                  <div class="dosNuqueHaut"></div>
+                  <div class="dosNuqueHautMilieu"></div>
+                  <div class="dosNuqueHautGauche"></div>
+                  <div class="dosNuqueHautDroite"></div>
+                  <div class="dosNuqueBas"></div>
+                  <div class="colonneCentre"></div>
+                  <div class="colonneGauche"></div>
+                  <div class="colonneDroite"></div>
+                  <div class="colonneGaucheBas"></div>
+                  <div class="colonneGaucheBas2"></div>
+                  <div class="colonneGaucheBas1"></div>
+                  <div class="colonneDroiteBas1"></div>
+                  <div class="colonneDroiteBas"></div>
+                  <div class="colonneDroiteBas2"></div>
+                  <div class="colonneGaucheToutBas"></div>
+                  <div class="colonneDroiteToutBas"></div>
+  
+                  <div class="fesseGauche1"></div>
+                  <div class="fesseGauche2"></div>
+                  <div class="fesseDroite1"></div>
+                  <div class="fesseDroite2"></div>
+                  <div class="molletGauche"></div>
+                  <div class="molletDroit"></div>
+  
+  
+                  <div class="coudeGauche"></div>
+                  <div class="coudeDroite"></div>
+  
+                  <div class="dosGauche1"></div>
+                  <div class="dosGauche2"></div>
+                  <div class="dosGauche3"></div>
+                  <div class="dosGauche4"></div>
+  
+                  <div class="dosDroite1"></div>
+                  <div class="dosDroite2"></div>
+                  <div class="dosDroite3"></div>
+                  <div class="dosDroite4"></div>
+  
+  
+  
+  
+  
+  
+              </div>
+  
+          </div>
+  
+          <footer >
+              <p>Fiche récaputilative propriété de l'Institut Franco Européen de Chiropraxie, tous droit réservés, ne peut être utilisé par un autre professionnel de la santé</p>
+          </footer>
+      
+    </body>
+  </html>
+  </body>
+  </html>
+  `;
+}
 
-                        </View>
-                    </View>
+  const [selectedPrinter, setSelectedPrinter] = React.useState();
 
-                    <View style={styles.secondArticle}>
-                        <View style={styles.firstPart}>
-                            <View style={{flexDirection:"row",height:30}}><View style={styles.violet}></View><Text style={styles.info}>Problème de stabilité ou de contrôle moteur (SMCD)</Text></View>
-                            <View style={{flexDirection:"row",height:30}}><View style={styles.bleu}></View><Text style={styles.info}>Joint Mobility dysfonciton (JMD) </Text></View>
-                            <View style={{flexDirection:"row",height:30}}><View style={styles.bleu}></View><Text style={styles.info}>Tissue extensibilty dysfonction (TED)</Text></View>
-                        </View>
-                        <View style={{height:20}}></View>
-                        <View style={styles.secondPart}>
-                            <View style={styles.paragraphe}><Text>Définitions :</Text></View>
-                            <View style={styles.paragraphe}><Text>SMCD (Violet) : Problème de contrôle moteur ayant pour solution les exercices de renforcements/contôle moteur</Text></View>
-                            <View style={styles.paragraphe}><Text>JMD (Bleu) : Problème de mobilité articulaire ayant pour solution les étirement articulaires, les mobilisations ou les manipulations</Text></View>
-                            <View style={styles.paragraphe}><Text>TED (Bleu) : Problème de tension musculaire ayant pour solution les étirement musculaires ou la détente musculaire</Text></View>
-                            <View style={styles.paragraphe}><Text>Pour tout renseignement complémentaire et demande de rendez vous, nous contacter au:</Text></View>
-                        </View>
-                    </View>
-                </View>
+  async function print() {
+    const html = await generateHTML();
+    await Print.printAsync({
+      html,
+      printerUrl: selectedPrinter?.url, // iOS only
+    });
+  }
 
-                <View style={styles.secondSection}>
-                    <View style={{flex:1}}><ImageBackground  resizeMode="contain" style={styles.corps} source={face}/></View>
-                    <View style={{flex:1}}><ImageBackground resizeMode="contain" style={styles.corps} source={dos}/></View>
-                </View>
-                <View style={styles.footer}>
-                    <Text>Fiche récaputilative propriété de l'Institut Franco Européen de Chiropraxie, tous droit réservés, ne peut être utilisé par un autre professionnel de la santé</Text>
-                </View>
-            </View> */}
+  async function printToFile()  {
+    const html= await generateHTML();
+    const { uri } = await Print.printToFileAsync({
+      html
+    });
+    console.log('File has been saved to:', uri);
+    await shareAsync(uri, { UTI: '.pdf', mimeType: 'application/pdf' });
+  }
 
+  const selectPrinter = async () => {
+    const printer = await Print.selectPrinterAsync(); // iOS only
+    setSelectedPrinter(printer);
+  }
 
-
-            
-        </ScrollView>
-    )
+  return (
+    <View style={styles.container}>
+      <View style={styles.buttonContainer}>
+        <Image style={styles.image} source={require('../ressources/printer.png')}/>
+        <Button title='Print' onPress={print}  />
+      </View>
+      <View style={styles.spacer} />
+      <View style={styles.buttonContainer}>
+          <Image  style={styles.image} source={require("../ressources/floppy-disk.png")}/>
+          <Button title='Share PDF file' onPress={printToFile}/>
+      </View>
+      {Platform.OS === 'ios' &&
+        <>
+          <View style={styles.spacer} />
+          <Button title='Select printer' onPress={selectPrinter}/>
+          <View style={styles.spacer} />
+          {selectedPrinter ? <Text style={styles.printer}>{`Selected printer: ${selectedPrinter.name}`}</Text> : undefined}
+        </>
+      }
+    </View>
+  );
 }
 
 const styles=StyleSheet.create({
-    container:{
-       // width:"100%",
-        height:"100%",
-        margin:"auto",
-        backgroundColor:"white",
-        padding:"5%",
-        shadowColor: "#000",
-        shadowOffset: {
-            width: 0,
-            height: 2
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5, 
-    },
-    title:{
-        fontWeight:"bold",
-        fontSize:12,
-        textAlign:"center",
-        lineHeight:30
-    },
-    titleContainer:{
-        width:"100%",
-        height:30,
-        borderWidth:1
-    },
-    firstArticle:{
-        flex:1
-    },
-    commentsContainer:{
-        borderWidth:1,
-        borderColor:"black",
-        flexGrow:1,
-        padding:10
+  container:{
+    flex:1,
+    
 
-    },
-    secondArticle:{
-        flex:1
-    },
-    info:{
-        textAlign:"center",
-        lineHeight:30,
-        marginLeft:10,
-    },
-    image:{
-        flex: 1,
-        justifyContent: "center"
-    },
-    header:{
-        flexDirection:'row',
-        width:"100%",
-        padding:15,
-        borderWidth:2,
-        borderColor:"black",
-        //flex:1,
-        marginBottom:20,
-    },
-    firstSection:{
-        flexDirection:"row",
-        flex:2,
-    },
-    firstArticle:{
-        marginRight:20,
-        flex:1,
-        flexGrow:1,
+  },
+  spacer:{
+    height:50
+  },
+  buttonContainer:{
+    height:"30%",
+    alignItems:"center",
+    padding:50,
+  },
+  image:{
+    width:75,
+    height:75,
+    marginBottom:30,
+  }
 
-    },
-    secondArticle:{
-        flex:1,        
-        flexGrow:1,
-    },
-    secondSection:{
-        flexDirection:"row",
-        flex:2,
-        //flexGrow:1,
-        height:600,
-    },
-    firstPart:{
-        borderWidth:1,
-        borderColor:"black",
-    },
-    secondPart:{
-        borderWidth:1,
-        borderColor:"black",
-        flexGrow:1,
-        padding:10
-    },
-    footer:{
-        borderWidth:2,
-        borderColor:"black",
-        height:30,
-        alignItems:"center",
-        justifyContent:"center"
-    },
-    violet:{
-        backgroundColor:"#a64d79",
-        width:30,
-        borderWidth:1,
-        borderColor:"black"    },
-    bleu:{
-        backgroundColor:"#1155cc",
-        width:30,
-        borderWidth:0.5,
-        borderColor:"black"
-    },
-    paragraphe:{
-        marginBottom:30
-    },
-    corps:{
-        justifyContent: "center",
-        flex:1
-    }
+
+
 })
-
-export default Resultat
