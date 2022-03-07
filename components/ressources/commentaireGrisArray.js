@@ -72,7 +72,7 @@ const commentaireGrisArray=[
         "Pied plat fonctionnel":["SMCD voûte plantaire",""],
         "Assisté":["SMCD Hip / Core / Spine -> Single leg stance","Voir stabilisé"],
     }},
-    {"Deep squat ":{
+    {"Deep squat":{
         "Assisté":["JMD/TED Membre inf","SMCD membre inf"]
     }},
 

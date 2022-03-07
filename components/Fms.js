@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,Pressable,TextInput,Button } from 'react-native';
+import { StyleSheet, Text, View,ScrollView,Button } from 'react-native';
 import React,{ useEffect, useState } from 'react';
 import { UserContext } from '../Context'
 import RowFMS from "./Questionnaire/model/RowFMS"
@@ -43,6 +43,8 @@ function Fms({navigation}){
     }, [result])
     
     return (
+        <ScrollView contentContainerStyle={{flexGrow:1}}>
+
         <View style={styles.view}>
             <View style={styles.row}>
                 <View style={{flex:1.5}}></View>
@@ -67,7 +69,9 @@ function Fms({navigation}){
                onPress={()=> navigation.navigate('Resultat')}
                />
             </View>
-        </View>       
+        </View>    
+        </ScrollView>
+   
     )
 }
 
