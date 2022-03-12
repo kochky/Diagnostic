@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View,ScrollView,Button } from 'react-native';
+import { StyleSheet, View,Pressable,ScrollView,Image,Text } from 'react-native';
 import React,{ useEffect, useState } from 'react';
 import { UserContext } from '../Context'
 import RowFMS from "./Questionnaire/model/RowFMS"
@@ -61,14 +61,13 @@ function Fms({navigation}){
             <RowFMS text="Le Trunk Stability Push-up" />
             <RowFMS text="Le Shoulder Mobility" />
             <RowFMS text="Le Rotary Stability " />
-            {hidden ? <Text style={{color:"blue"}}>Score: Finissez les tests pour voir le score</Text>:<Text style={{color:"blue"}}>Score: {result}</Text>}
-            <View style={styles.buttonContainer}>
-               <Button
-               color="#rgba(24,83,79,1)"
-               title="Résultat"
-               onPress={()=> navigation.navigate('Resultat')}
-               />
-            </View>
+            {hidden ? <Text style={{color:"blue",marginTop:20}}>Score: Finissez les tests pour voir le score</Text>:<Text style={{color:"blue",marginTop:20}}>Score: {result}</Text>}
+            <Pressable onPress={()=> navigation.navigate('Resultat')}>
+                <View style={styles.resultContainer}>
+                    <Image style={styles.image} source={require('../ressources/result.png')}/>
+                    <Text style={{color:"white"}}>RESULTAT</Text> 
+                </View>
+            </Pressable>
         </View>    
         </ScrollView>
    
@@ -119,7 +118,39 @@ const styles = StyleSheet.create({
         elevation: 5,
     },
     buttonContainer:{
-        marginTop:30,
+        backgroundColor:"#rgba(24,83,79,1)",
+        width:50,
+        height:50,
+        borderRadius:15,
+        alignItems:"center",
+        justifyContent:"center",
+        flexDirection:"row"
+    },
+    text:{
+        color:"#rgba(24,83,79,1)",
+        fontWeight:"bold",
+    },
+    image:{
+        width:40,
+        height:40
+    },
+    container:{
+        flex:1,
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-around",  
+    },
+    resultContainer:{
+        backgroundColor:"#rgba(24,83,79,1)",
+        flexDirection:"row",
+        alignItems:"center",
+        alignSelf:"center",
+        justifyContent:"space-around",
+        height:50,
+        borderRadius:15,
+        width:150,
+        padding: 10,
+        marginTop:30
     }
 });
 

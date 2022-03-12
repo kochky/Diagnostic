@@ -1,4 +1,4 @@
-import { StyleSheet, View,Pressable,Text,TextInput,ScrollView } from 'react-native';
+import { StyleSheet, View,Pressable,ScrollView,Image,Text,TextInput } from 'react-native';
 import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import { UserContext } from '../../Context'
@@ -82,10 +82,19 @@ function SingleLegStance({navigation}){
                     value={commentaire}
                     style={styles.input}
                 />
-                <View style={styles.buttonContainer}>
-                    <Pressable onPress={()=> navigation.navigate('Overhead Deep Squat')}>
-                        <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                <View  style={styles.container}>
+                    <Pressable onPress={()=> navigation.navigate('Resultat')}>
+                        <View style={styles.resultContainer}>
+                            <Image style={styles.image} source={require('../../ressources/result.png')}/>
+                            <Text style={{color:"white"}}>RESULTAT</Text> 
+                        </View>
                     </Pressable>
+                    <Pressable onPress={()=> navigation.navigate('Overhead Deep Squat')}>
+                        <View style={styles.buttonContainer}>
+                            <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                        </View>
+                    </Pressable>
+                    
                 </View>
             </View>      
         </ScrollView> 
@@ -119,19 +128,41 @@ const styles = StyleSheet.create({
         backgroundColor:"#rgba(24,83,79,1)",
         width:50,
         height:50,
-        borderRadius:50,
+        borderRadius:15,
         alignItems:"center",
         justifyContent:"center",
-        alignSelf:"flex-end",
-        marginTop:30,
-    },
-    input:{
-        color:"#rgba(24,83,79,1)"
+        flexDirection:"row"
     },
     text:{
         color:"#rgba(24,83,79,1)",
         fontWeight:"bold",
-    }
+    },
+    image:{
+        width:40,
+        height:40
+    },
+    container:{
+        flex:1,
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-around", 
+    },
+    resultContainer:{
+        backgroundColor:"#rgba(24,83,79,1)",
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-around",
+        height:50,
+        borderRadius:15,
+        width:150,
+        padding: 10,
+    },
+    input:{
+        color:"#rgba(24,83,79,1)",
+        flex:1,
+        marginBottom:20
+    },
+
 });
 
 

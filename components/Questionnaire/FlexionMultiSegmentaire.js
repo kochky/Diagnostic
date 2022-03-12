@@ -1,4 +1,4 @@
-import { StyleSheet, View,Pressable,ScrollView } from 'react-native';
+import { StyleSheet, View,Pressable,ScrollView,Image,Text } from 'react-native';
 import React, {useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -34,10 +34,19 @@ function FlexionMultiSegmentaire({navigation}){
                 <RowDoubleGray title={title} text="Flexion membre inf en décharge" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Ajout de la dorsiflexion de cheville" firstCase="Actif=Passif" secondCase="Aggravation"/>
                 <RowFourCheckbox title={title} text={"Oeuf (rachis en flexion)"}/>
-                <View style={styles.buttonContainer}>
-                    <Pressable onPress={()=> navigation.navigate('Extension Multi-Segmentaire')}>
-                        <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                <View  style={styles.container}>
+                    <Pressable onPress={()=> navigation.navigate('Resultat')}>
+                        <View style={styles.resultContainer}>
+                            <Image style={styles.image} source={require('../../ressources/result.png')}/>
+                            <Text style={{color:"white"}}>RESULTAT</Text> 
+                        </View>
                     </Pressable>
+                    <Pressable onPress={()=> navigation.navigate('Extension Multi-Segmentaire')}>
+                        <View style={styles.buttonContainer}>
+                            <Icon name="navigate-next"  type="MaterialIcons" color='white'/>
+                        </View>
+                    </Pressable>
+                    
                 </View>
             </View>       
         </ScrollView>
@@ -64,16 +73,39 @@ const styles = StyleSheet.create({
         backgroundColor:"#rgba(24,83,79,1)",
         width:50,
         height:50,
-        borderRadius:50,
+        borderRadius:15,
         alignItems:"center",
         justifyContent:"center",
-        alignSelf:"flex-end",
-        marginTop:30,
+        flexDirection:"row"
     },
     text:{
         color:"#rgba(24,83,79,1)",
         fontWeight:"bold",
-    }
+    },
+    image:{
+        width:40,
+        height:40
+    },
+    container:{
+        flex:1,
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-around", 
+    },
+    resultContainer:{
+        backgroundColor:"#rgba(24,83,79,1)",
+        flexDirection:"row",
+        alignItems:"center",
+        justifyContent:"space-around",
+        height:50,
+        borderRadius:15,
+        width:150,
+        padding: 10,
+    },
+    input:{
+        color:"#rgba(24,83,79,1)"
+    },
+
 });
 
 
