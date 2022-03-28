@@ -9,25 +9,11 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
     const props = React.useContext(UserContext); 
     const [isLoaded,setIsLoaded]=useState(false)
     const patientId= props.name+props.firstName+props.date
-    const [selected,setSelected]=useState()
+    const [selected,setSelected]=useState(false)
+    const [secondCaseSelected,setSecondCaseSelected]=useState(false)
     const [comment,setComment]=useState()
     
 
-    function isSelected(){
-        if(selected!=undefined){
-            return selected
-        }else {
-            return false
-        }
-    }
-
-    function isNotSelected(){
-        if(selected!=undefined){
-            return !selected
-        }else {
-            return false
-        }
-    }
 
     useEffect(() => {
         if(isLoaded===false){
@@ -67,7 +53,7 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
                 }})})
             }})
 
-            }else if(selected===false){
+            }else if(secondCaseSelected){
                 props.setData(data=>({
                     ...data,
                     [patientId]:{
@@ -88,9 +74,31 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
                     }})})
                 }})
 
+            }else {
+                props.setData(data=>({
+                    ...data,
+                    [patientId]:{
+                        ...data[patientId],
+                        [title]:{...data[patientId][title]
+                            ,[text]:''}
+                        }}))
+                commentaireGrisArray.map((categorie)=>{if (Object.keys(categorie).toString()===title.toString()){
+                    Object.values(categorie).map((commentaire)=>{
+                        Object.keys(commentaire).map(clef=>{if (clef.toString()===text.toString()){
+                            setComment()
+                            props.setData(data=>({...data,
+                                [patientId]:{...data[patientId],
+                                    ["diagnostic"]:{...data[patientId]["diagnostic"],
+                                    [title]:{...data[patientId]["diagnostic"][title],
+                                    [text]:''
+                            }}}}))
+                    }})})
+                }})
+
+
             }
         }
-    }, [selected])
+    }, [selected,secondCaseSelected])
     
 
     return(
@@ -106,14 +114,14 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
                 
                 <View   style={{flex:2,alignItems:'center'}}>
                     <CheckBox 
-                        checked={isSelected()}
-                        onPress={() => setSelected(!selected)}                    />
+                        checked={selected}
+                        onPress={() => setSelected(!selected)}               />
                 </View>
                
                 <View   style={{flex:2,alignItems:'center'}}>
                 {secondCase.length>0 && <CheckBox 
-                        checked={isNotSelected()}
-                        onPress={() => setSelected(!selected)} 
+                        checked={secondCaseSelected}
+                        onPress={() => setSecondCaseSelected(!secondCaseSelected)} 
                 />}
                 </View>
             </View>

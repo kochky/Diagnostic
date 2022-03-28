@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View } from 'react-native';
 import React, { useState, useEffect } from 'react'
-import { Slider, Icon } from 'react-native-elements';
 import { UserContext } from '../../../Context'
 import commentaireArray from '../../ressources/commentairesArray';
+import { CheckBox } from 'react-native-elements';
 
 
 function RowFourCheckbox({title,text}){
@@ -150,40 +150,51 @@ function RowFourCheckbox({title,text}){
        }
 
     };
-    
+    function checkValue(x){
+        if (value===x){
+            return true
+        } 
+        return false
+    }
+
+    function removeChecked(x){
+        if(value===x){
+            setValue(0)
+        }else {
+            setValue(x)
+        }
+    }
+
     return(
         <View>
             <View style={styles.row}>
                 <Text style={{flex:2}}>{text}</Text>
                 <View style={styles.view}>
-                    <Slider
-                        value={value}
-                        onValueChange={setValue}
-                        maximumValue={4}
-                        minimumValue={0}
-                        minimumTrackTintColor={color()}
-                        step={1}
-                        allowTouchTrack
-                        trackStyle={{ height: 5, backgroundColor: 'transparent' }}
-                        thumbStyle={{ height: 10, width: 10, backgroundColor: 'transparent' }}
-                        thumbProps={{
-                            children: (
-                        <Icon 
-                            type="font-awesome"
-                            size={10}
-                            reverse
-                            containerStyle={{ bottom: 15, right: 10 }}
-                            color={color()}
-                        />
-                        ),
-                    }}
-                    />
-                </View>   
-                <View style={{flex:0.5}}></View>
+                    <View   style={{flex:1,alignItems:'center'}}>
+                        <CheckBox 
+                            checked={checkValue(1) }
+                            onPress={()=>removeChecked(1)}  />
+                    </View>
+                    <View   style={{flex:1,alignItems:'center'}}>
+                        <CheckBox 
+                            checked={checkValue(2) }
+                            onPress={()=>removeChecked(2)}  />
+                    </View>
+                    <View   style={{flex:1,alignItems:'center'}}>
+                        <CheckBox 
+                            checked={checkValue(3) }
+                            onPress={()=>removeChecked(3)}  />
+                    </View>
+                    <View   style={{flex:1,alignItems:'center'}}>
+                        <CheckBox 
+                            checked={checkValue(4) }
+                            onPress={()=>removeChecked(4)}  />
+                    </View>
+                </View> 
             </View>
             <View style={{height:50,marginTop:20}}>
                 <Text style={styles.text}>{comment}</Text>
-            </View>
+            </View>  
         </View>
     )
 }
@@ -203,7 +214,9 @@ const styles = StyleSheet.create({
         width: '100%',
         justifyContent: 'center',
         alignItems: 'stretch',
-        height:60
+        height:60,
+        flexDirection:"row",
+        alignItems:"center",
         
     },
     text:{

@@ -11,7 +11,7 @@ export default function Resultat({navigation}) {
     const patientId= props.name+props.firstName+props.date
 
     const commentArray=[]
-    {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(p=>commentArray.push(p)))}
+    {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(p=>p!=''&&commentArray.push(p)))}
 
     
     

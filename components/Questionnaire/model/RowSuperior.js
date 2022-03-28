@@ -5,7 +5,6 @@ function RowSuperior(){
     return(
         <View style={styles.row}>
             <View style={{flex:2}}></View>
-            <Text style={{flex:0.5}}></Text>
             <Text style={styles.green}>FND</Text>
             <Text style={styles.red}>FD</Text>
             <Text style={styles.red}>NFD</Text>

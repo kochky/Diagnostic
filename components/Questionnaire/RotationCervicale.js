@@ -134,7 +134,9 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     input:{
-        color:"#rgba(24,83,79,1)"
+        color:"#rgba(24,83,79,1)",
+        flex:1,
+        marginBottom:20
     },
 
  
