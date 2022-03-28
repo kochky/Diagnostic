@@ -30,7 +30,7 @@ function Archives({navigation}){
         props.setEmail(patient.email)
         props.setStructure(patient.structure)
         props.setActivity(patient.activity)
-        navigation.navigate('Resultat')
+        navigation.navigate('Section')
 
     }
 

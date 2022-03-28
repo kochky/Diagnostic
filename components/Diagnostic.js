@@ -33,14 +33,14 @@ function Diagnostic ({navigation}){
   }
 
   function modify(){
-    navigation.navigate('Flexion Cervicale')
+    navigation.navigate('Section')
     setVisible(false)
 
   }
   useEffect(() => {
    if(error===false){
       props.setData(data=>({...data,[props.name+props.firstName+props.date]:{date:props.date,name:props.name,firstName:props.firstName,phone:props.phone,email:props.email,structure:props.structure,activity:props.activity,diagnostic:diagnostic}}))      
-      navigation.navigate('Flexion Cervicale')
+      navigation.navigate('Section')
       setVisible(false)
    }
   }, [error])
