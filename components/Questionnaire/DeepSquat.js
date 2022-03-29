@@ -1,16 +1,18 @@
 import { StyleSheet, View,Pressable,ScrollView,Image,Text } from 'react-native';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext} from "../../Context"
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 
 function DeepSquat({navigation}){
     const title="Deep squat"
     const props = React.useContext(UserContext); 
+    const [hidden,setHidden]=useState(true)
 
     const storeData = async (value) => {
         try {
@@ -30,8 +32,8 @@ function DeepSquat({navigation}){
 
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Deep squat"}/>
-                <RowDoubleGray title={title} text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text={"Deep squat"}/>
+                {!hidden && <RowDoubleGray title={title} text="Assisté" firstCase="Ne change rien" secondCase="Mieux"/>}
                 <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>

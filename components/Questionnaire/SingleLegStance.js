@@ -7,15 +7,18 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 
 function SingleLegStance({navigation}){
 
-    const [commentaire,setCommentaire]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Single leg stance"
     const [isLoaded,setIsLoaded]=useState(false)
+    const [commentaire,setCommentaire]=useState("")
+    const [hidden,setHidden]=useState(true)
+
 
     const storeData = async (value) => {
         try {
@@ -58,8 +61,9 @@ function SingleLegStance({navigation}){
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Single leg stance"}/>
-                <RowFourCheckbox title={title} text={"Yeux fermés"}/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text={"Single leg stance"}/>
+               {hidden===false && (<> 
+               <RowFourCheckbox title={title} text={"Yeux fermés"}/>
                 <Text style={styles.title}>Vestibule cervicale</Text>
                 <RowDoubleGray title={title} text="Romberg sur sol mou" firstCase="Perte d'équilibre mineur ou pas de perte d'équilibre" secondCase="Perte d'équilibre majeur"/>
                 <RowDoubleGray title={title} text="Perte d'équilibre" firstCase="Limité" secondCase=""/>
@@ -82,6 +86,7 @@ function SingleLegStance({navigation}){
                     value={commentaire}
                     style={styles.input}
                 />
+                </>)}
                 <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>

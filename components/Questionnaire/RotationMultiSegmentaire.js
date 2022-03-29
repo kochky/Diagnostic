@@ -7,14 +7,17 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 
 function RotationMultiSegmentaire({navigation}){
-    const [commentaire,setCommentaire]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Rotation multi-ségmentaire"
+
     const [isLoaded,setIsLoaded]=useState(false)
+    const [commentaire,setCommentaire]=useState("")
+    const [hidden,setHidden]=useState(true)
 
     const storeData = async (value) => {
         try {
@@ -56,7 +59,8 @@ function RotationMultiSegmentaire({navigation}){
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Rotation multi-ségmentaire "}/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text={"Rotation multi-ségmentaire "}/>
+                {hidden===false && (<> 
                 <RowDoubleGray title={title} text="Décharge" firstCase="Limité" secondCase="Pas limité"/>
                 <Text style={styles.title}> Membre sup (Rotation rachidienne)</Text>
                 <RowSuperior/>
@@ -76,6 +80,8 @@ function RotationMultiSegmentaire({navigation}){
                     value={commentaire}
                     style={styles.input}
                     />
+                    </> )} 
+
                 <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>

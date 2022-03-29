@@ -3,6 +3,7 @@ import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import { UserContext } from '../../Context'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -11,12 +12,13 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 function OverheadDeepSquat({navigation}){
 
-    const [commentaire,setCommentaire]=useState("")
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Overhead deep squat"
     const [isLoaded,setIsLoaded]=useState(false)
-    
+    const [commentaire,setCommentaire]=useState("")
+    const [hidden,setHidden]=useState(true)
+
     const storeData = async (value) => {
         try {
           const jsonValue = JSON.stringify(value)
@@ -56,7 +58,8 @@ function OverheadDeepSquat({navigation}){
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Overhead deep squat"}/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text={"Overhead deep squat"}/>
+                {hidden===false && (<>
                 <RowDoubleGray title={title} text="Stabilisé" firstCase="Mieux" secondCase="Pas mieux"/>
                 <Text style={styles.title}>Upper Body /  Tronc</Text>
                 <RowSuperior/>
@@ -76,7 +79,8 @@ function OverheadDeepSquat({navigation}){
                     onChangeText={setCommentaire}
                     value={commentaire}
                     style={styles.input}
-                    />
+                    /> 
+                </> )}
                 <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>

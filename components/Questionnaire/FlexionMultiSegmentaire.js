@@ -1,16 +1,18 @@
 import { StyleSheet, View,Pressable,ScrollView,Image,Text } from 'react-native';
-import React, {useEffect} from 'react'
+import React, {useEffect , useState} from 'react'
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext} from "../../Context"
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 
 function FlexionMultiSegmentaire({navigation}){
     const title="Flexion multi-ségmentaire"
     const props = React.useContext(UserContext); 
+    const [hidden,setHidden]=useState(true)
 
     const storeData = async (value) => {
         try {
@@ -29,11 +31,13 @@ function FlexionMultiSegmentaire({navigation}){
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Flexion multi-segmentaire"}/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text={"Flexion multi-segmentaire"}/>
+              {hidden===false && (<> 
                 <RowFourCheckbox title={title} text={"Flexion multi-segmentaire en décharge"}/>
                 <RowDoubleGray title={title} text="Flexion membre inf en décharge" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Ajout de la dorsiflexion de cheville" firstCase="Actif=Passif" secondCase="Aggravation"/>
-                <RowFourCheckbox title={title} text={"Oeuf (rachis en flexion)"}/>
+                <RowFourCheckbox title={title} text={"Oeuf (rachis en flexion)"}/> 
+                </>)}
                 <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>

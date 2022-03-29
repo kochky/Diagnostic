@@ -3,6 +3,7 @@ import React, { useState, useEffect} from 'react'
 import { Icon } from 'react-native-elements';
 import { UserContext } from '../../Context'
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
@@ -10,11 +11,13 @@ import RowDoubleGray from './model/RowDoubleGray';
 
 
 function RotationCervicale({navigation}){
-    const [commentaire,setCommentaire]=useState("")
+
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
     const title="Rotation cervicale"
     const [isLoaded,setIsLoaded]=useState(false)
+    const [commentaire,setCommentaire]=useState("")
+    const [hidden,setHidden]=useState(true)
 
     const storeData = async (value) => {
         try {
@@ -54,7 +57,8 @@ function RotationCervicale({navigation}){
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text="Rotation cervicale"/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text="Rotation cervicale"/>
+                {hidden===false && (<> 
                 <RowFourCheckbox title={title} text="Rotation active supine"/>
                 <RowDoubleGray title={title} text="Rotation passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Test isolation C1-C2" firstCase="Limité" secondCase="Non limité"/>
@@ -64,6 +68,7 @@ function RotationCervicale({navigation}){
                     value={commentaire}
                     style={styles.input}
                 />
+                </>)}
               <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>

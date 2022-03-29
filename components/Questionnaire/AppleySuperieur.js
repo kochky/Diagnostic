@@ -7,15 +7,19 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 
 function AppleySuperieur({navigation}){
 
-    const [commentaire,setCommentaire]=useState("")
     const props = React.useContext(UserContext); 
     const title= "Appley superieur"
     const patientId= props.name+props.firstName+props.date
+
     const [isLoaded,setIsLoaded]=useState(false)
+    const [commentaire,setCommentaire]=useState("")
+    const [hidden,setHidden]=useState(true)
+
 
     const storeData = async (value) => {
         try {
@@ -57,8 +61,8 @@ function AppleySuperieur({navigation}){
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Appley superieur"}/>
-                <RowFourCheckbox title={title} text={"Appley sup en décharge"}/>
+                <FirstRowFourCheckbox title={title} text={"Appley superieur"} setHidden={setHidden}/>
+                {hidden===false && <><RowFourCheckbox title={title} text={"Appley sup en décharge"}/>
                 <RowDoubleGray title={title} text="Rotation externe GH <90°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
                 <RowDoubleGray title={title} text="Flexion/Abduction (craw) décollage du buste" firstCase="Limité" secondCase="Non limité"/>
                 <RowDoubleGray title={title} text="Extension/rotation thoracique <50°" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
@@ -69,7 +73,7 @@ function AppleySuperieur({navigation}){
                     onChangeText={setCommentaire}
                     value={commentaire}
                     style={styles.input}
-                />
+                /></>}
             
             <View  style={styles.container}>
                 <Pressable onPress={()=> navigation.navigate('Resultat')}>

@@ -1,16 +1,18 @@
 import { StyleSheet, View,Pressable,ScrollView,Image,Text } from 'react-native';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState} from 'react'
 import { Icon } from 'react-native-elements';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext} from "../../Context"
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 
 function ExtensionMultiSegmentaire({navigation}){
     const title="Extension multi-ségmentaire"
     const props = React.useContext(UserContext); 
+    const [hidden,setHidden]=useState(true)
 
     const storeData = async (value) => {
         try {
@@ -30,7 +32,8 @@ function ExtensionMultiSegmentaire({navigation}){
                 <Text style={styles.title}>Membre sup</Text>
                 <RowSuperior/>
 
-                <RowFourCheckbox title={title} text={"Extension multi-ségmentaire"}/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text={"Extension multi-ségmentaire"}/>
+                {hidden===false && (<> 
                 <RowFourCheckbox title={title} text={"Décharge membre sup (sans flexion d'épaule)"}/>
                 <RowDoubleGray title={title} text="Jésus position" firstCase="Pas de modification de la position des bras à l'allongement des jambes" secondCase="Si bras en contact avec la table à l'allongement des jambes"/>
                 <Text style={styles.title}>Lumbar Lock modifé (Main sur occiput)</Text>
@@ -47,6 +50,7 @@ function ExtensionMultiSegmentaire({navigation}){
                 <RowDoubleGray title={title} text={"Thomas"} firstCase="Abduction ou Extension genou" secondCase="Flexum de hanche"/>
                 <RowDoubleGray title={title} text="Hip adduction test" firstCase="Glut med non activé en premier" secondCase=""/>
                 <RowDoubleGray title={title}text="Hip extension test" firstCase="Glut med non activé en premier" secondCase=""/>
+                </>)}
                 <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>

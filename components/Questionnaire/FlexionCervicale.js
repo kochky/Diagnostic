@@ -1,15 +1,17 @@
 import { StyleSheet, View,Pressable,ScrollView,Image,Text } from 'react-native';
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Icon } from 'react-native-elements';
 import RowSuperior from './model/RowSuperior';
 import RowFourCheckbox from './model/RowFourCheckbox';
 import RowDoubleGray from './model/RowDoubleGray';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext} from "../../Context"
+import FirstRowFourCheckbox from './model/FirstRowFourCheckBox';
 
 function FlexionCervicale({navigation}){
     const title="Flexion cervicale"
     const props = React.useContext(UserContext); 
+    const [hidden,setHidden]=useState(true)
 
     const storeData = async (value) => {
         try {
@@ -27,10 +29,13 @@ function FlexionCervicale({navigation}){
         <ScrollView contentContainerStyle={{flexGrow:1}}>
             <View style={styles.view}>
                 <RowSuperior/>
-                <RowFourCheckbox title={title} text={"Flexion cervicale"}/>
-                <RowFourCheckbox title={title} text={"Flexion active supine"}/>
+                <FirstRowFourCheckbox setHidden={setHidden} title={title} text={"Flexion cervicale"}/>
+
+               {hidden===false && (<> 
+               <RowFourCheckbox title={title} text={"Flexion active supine"}/>
                 <RowDoubleGray title={title} text="Flexion passive supine" firstCase="Actif=Passif" secondCase="Passif mieux que actif"/>
-                <RowDoubleGray title={title} text="Isolation C0-C1" firstCase="Limité" secondCase="Non limité"/>
+                <RowDoubleGray title={title} text="Isolation C0-C1" firstCase="Limité" secondCase="Non limité"/> 
+                </> )}
                 <View  style={styles.container}>
                     <Pressable onPress={()=> navigation.navigate('Resultat')}>
                         <View style={styles.resultContainer}>
