@@ -4,7 +4,6 @@ import image from '../ressources/kira-auf-der-heide-_Zd6COnH5E8-unsplash.jpg'
 import { UserContext } from '../Context'
 
 
-
 function Menu ({navigation}){
     const props = React.useContext(UserContext); 
 

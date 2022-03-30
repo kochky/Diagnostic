@@ -2,8 +2,8 @@
 
 const commentaireGrisArray=[
     {"Flexion cervicale" :{
-        "Flexion passive supine":["Test d'isolation C0-C1","SMCD muscles fléchisseurs profonds du cou "],
-        "Isolation C0-C1":["JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales ","JMD/TED Basse et moyennes cervicales uniquement "],
+        "Flexion passive supine":["Test d'isolation C0-C1","SMCD muscles fléchisseurs profonds du cou"],
+        "Isolation C0-C1":["JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales","JMD/TED Basse et moyennes cervicales uniquement"],
     }},
     {"Extension cervicale":
         {"Extension passive supine":["JMD/TED cervicale et haute thoracique","SMCD des muscles extenseurs du cou"],

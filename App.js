@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserContext } from './Context'
-import Test from './components/Resultat';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 
 import Menu from './components/Menu';
@@ -25,8 +25,27 @@ import OverheadDeepSquat from './components/Questionnaire/OverheadDeepSquat';
 import DeepSquat from './components/Questionnaire/DeepSquat';
 
 const Stack = createNativeStackNavigator();
+const Drawer = createDrawerNavigator();
 
+function Section(){
+  return (
+    <Drawer.Navigator useLegacyImplementation={true}>
+      <Drawer.Screen name="Resultat" component={Resultat} />
+      <Drawer.Screen name="Flexion Cervicale" component={FlexionCervicale} />
+      <Drawer.Screen name="Extension Cervicale" component={ExtensionCervicale} />
+      <Drawer.Screen name="Rotation Cervicale" component={RotationCervicale} />
+      <Drawer.Screen name="Appley Superieur" component={AppleySuperieur} />
+      <Drawer.Screen name="Appley Inferieur" component={AppleyInferieur} />
+      <Drawer.Screen name="Flexion Multi-Segmentaire" component={FlexionMultiSegmentaire} />
+      <Drawer.Screen name="Extension Multi-Segmentaire" component={ExtensionMultiSegmentaire} />
+      <Drawer.Screen name="Rotation Multi-Segmentaire" component={RotationMultiSegmentaire} />
+      <Drawer.Screen name="Single Leg Stance" component={SingleLegStance} />
+      <Drawer.Screen name="Overhead Deep Squat" component={OverheadDeepSquat} />
+      <Drawer.Screen name="Deep Squat" component={DeepSquat} />
+      <Drawer.Screen name="FMS" component={Fms} />
+    </Drawer.Navigator> )
 
+}
 
 export default function App() {
 
@@ -54,30 +73,17 @@ export default function App() {
     getData()
   }, [])
 
-
+  
   return (
     <UserContext.Provider value={{newPatient:newPatient,setNewPatient:setNewPatient,data:data,setData:setData,name:name,setName:setName,firstName:firstName,setFirstname:setFirstname,email:email,setEmail:setEmail,date:date,setDate:setDate,structure:structure,setStructure:setStructure,phone:phone,setPhone:setPhone,activity:activity,setActivity:setActivity}} >
       <NavigationContainer>
         <Stack.Navigator>
-        <Stack.Screen name="Menu" component={Menu} />
-        <Stack.Screen name="Nouveau diagnostique" component={Diagnostic} /> 
-        <Stack.Screen name="Flexion Cervicale" component={FlexionCervicale} />
-        <Stack.Screen name="Extension Cervicale" component={ExtensionCervicale} />
-        <Stack.Screen name="Rotation Cervicale" component={RotationCervicale} />
-        <Stack.Screen name="Appley Superieur" component={AppleySuperieur} />
-        <Stack.Screen name="Appley Inferieur" component={AppleyInferieur} />
-        <Stack.Screen name="Flexion Multi-Segmentaire" component={FlexionMultiSegmentaire} />
-        <Stack.Screen name="Extension Multi-Segmentaire" component={ExtensionMultiSegmentaire} />
-        <Stack.Screen name="Rotation Multi-Segmentaire" component={RotationMultiSegmentaire} />
-        <Stack.Screen name="Single Leg Stance" component={SingleLegStance} />
-        <Stack.Screen name="Overhead Deep Squat" component={OverheadDeepSquat} />
-        <Stack.Screen name="Deep Squat" component={DeepSquat} />
-        <Stack.Screen name="FMS" component={Fms} />
-        <Stack.Screen name="Resultat" component={Resultat} />
-        <Stack.Screen name="Archives" component={Archives} />
-
+          <Stack.Screen name="Menu" component={Menu} />
+          <Stack.Screen name="Nouveau diagnostique" component={Diagnostic} /> 
+          <Stack.Screen name="Section" component={Section} />
+          <Stack.Screen name="Archives" component={Archives} />
         </Stack.Navigator>
-      </NavigationContainer>
+      </NavigationContainer> 
     </UserContext.Provider>
 
   );

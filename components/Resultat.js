@@ -3,18 +3,14 @@ import { View, StyleSheet, Button, Platform, Text, Image } from 'react-native';
 import * as Print from 'expo-print';
 import { shareAsync } from 'expo-sharing';
 import { UserContext } from '../Context'
-
+import { useIsFocused } from '@react-navigation/native';
 
 
 export default function Resultat({navigation}) {
     const props = React.useContext(UserContext); 
     const patientId= props.name+props.firstName+props.date
 
-    const commentArray=[]
-    {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(p=>p!=''&&commentArray.push(p)))}
 
-    
-    
     const [coude,setCoude]=useState("")
     const [cou,setCou]=useState("")
     const [epauleHaut,setEpauleHaut]=useState("")
@@ -34,7 +30,6 @@ export default function Resultat({navigation}) {
     const [jambeCentre5,setJambeCentre5]=useState('')
     const [jambeBas,setJambeBas]=useState('')
     const [pied,setPied]=useState('')
-
     const [dosNuqueHaut,setDosNuqueHaut]=useState('')
     const [dosNuqueHautMilieu,setDosNuqueHautMilieu]=useState('')
     const [dosNuqueHautCote,setDosNuqueHautCote]=useState('')
@@ -52,84 +47,220 @@ export default function Resultat({navigation}) {
     const [dosGauche2,setDosGauche2]=useState("")
     const [dosGauche3,setDosGauche3]=useState("")
     const [dosGauche4,setDosGauche4]=useState("")
-
-
+    
+    const isFocused = useIsFocused();
+    
+    const commentArray=[]
+    {Object.values(props.data[patientId]["diagnostic"]).map((diag,i)=>Object.values(diag).map(p=>p!=''&&commentArray.push(p)))}
     useEffect(() => {
-        
-        commentArray.includes("SMCD muscles fléchisseurs profonds du cou" || "SMCD Flexion cervicale et muscles posturaux du cou") && setCou("backgroundPurple")
-        commentArray.includes("JMD/TED Flexion/adbuction gléno-humérale" || "JMD/TED Extension gléno-humérale") && setEpauleHaut("backgroundBlue")
-        commentArray.includes("SMCD Flexion/abduction Gléno-humérale" || "SMCD des muscles posturaux stabilisateurs d'épaule sur-actifs") && setEpauleHaut("backgroundPurple")
+        if(isFocused){
+
+        setCoude('')
+        setCou('')
+        setEpauleHaut('')
+        setEpauleBas('')
+        setVentreHaut('')
+        setVentreHaut2('')
+        setVentreHautCote('')
+        setVentreHautCentre('')
+        setVentreBasCentre('')
+        setVentreBasCentreCote('')
+        setJambeHaut1('')
+        setJambeHaut2('')
+        setJambeCentre1('')
+        setJambeCentre2('')
+        setJambeCentre3('')
+        setJambeCentre4('')
+        setJambeCentre5('')
+        setJambeBas('')
+        setPied('')
+        setDosNuqueHaut('')
+        setDosNuqueHautMilieu('')
+        setDosNuqueHautCote('')
+        setDosNuqueBas('')
+        setColonneCentre('')
+        setColonneGauche('')
+        setColonneGaucheBas('')
+        setColonneGaucheBas1('')
+        setColonneGaucheBas2('')
+        setColonneGaucheToutBas('')
+        setFesse1('')
+        setFesse2('')
+        setMollet('')
+        setDosGauche1('')
+        setDosGauche2('')
+        setDosGauche3('')
+        setDosGauche4('')
+
+        commentArray.includes("SMCD Flexion cervicale et muscles posturaux du cou") && setCou("backgroundPurple")
+        commentArray.includes("SMCD muscles fléchisseurs profonds du cou") && setCou("backgroundPurple")
+
+        commentArray.includes("JMD/TED Flexion/adbuction gléno-humérale" ) && setEpauleHaut("backgroundBlue")
+        commentArray.includes( "JMD/TED Extension gléno-humérale") && setEpauleHaut("backgroundBlue")
+
+        commentArray.includes("SMCD Flexion/abduction Gléno-humérale") && setEpauleHaut("backgroundPurple")
+        commentArray.includes("SMCD Flexion/abduction Gléno-humérale") && setEpauleHaut("backgroundPurple")
+
         commentArray.includes("JMD/TED Extension gléno-humérale") && setEpauleBas("backgroundBlue")
-        commentArray.includes("SMCD muscles de la flexion rachidienne" ||"SMCD Core" ) && setVentreHaut("backgroundPurple")
-        commentArray.includes("SMCD muscles de la flexion rachidienne") && setVentreHautCentre("backgroundPurple")
-        commentArray.includes("SMCD muscles de la flexion rachidienne") && setVentreHaut2("backgroundPurple")
 
-        commentArray.includes("SMCD core chaine ouverte" ||'SMCD muscles de la flexion rachidienne' || 'SMCD core chaine ouverte') && setVentreHautCote("backgroundPurple")
-        commentArray.includes("SMCD des muscles posturaux membre inf et ceinture pelvienne" ) &&  setVentreBasCentre("backgroundPurple")
-        commentArray.includes("SMCD des muscles posturaux membre inf et ceinture pelvienne" ) && setVentreHautCentre("backgroundPurple")
+        commentArray.includes("SMCD muscles de la flexion rachidienne") && setVentreHaut("backgroundPurple")
+        commentArray.includes("SMCD Core" ) && setVentreHaut("backgroundPurple")
 
-        commentArray.includes("JMD ou TED flexion de hanche"|| 'JMD ou TED rotation externe de la CF' || 'JMD ou TED rotation interne de la CF' ) &&  setVentreBasCentreCote("backgroundBlue")
-        commentArray.includes("SMCD des muscles posturaux membre inf et ceinture pelvienne"|| 'SMCD des muscles rotateurs internes de hanche' || 'SMCD des muscles rotateurs externes de hanche' ) &&  setVentreBasCentreCote("backgroundPurple")
-        commentArray.includes("JMD ou TED flexion de hanche"|| 'JMD ou TED rotation externe de la CF'||'JMD ou TED rotation interne de la CF' ) && setJambeHaut1("backgroundBlue")
-        commentArray.includes("SMCD core chaine ouverte"|| 'SMCD muscles de la flexion rachidienne'||'SMCD core chaine ouverte'|| 'SMCD des muscles rotateurs internes de hanche' ||'SMCD des muscles rotateurs externes de hanche' ) && setJambeHaut1("backgroundPurple")
-        commentArray.includes("JMD ou TED flexion de hanche"|| 'JMD ou TED rotation externe de la CF'||'JMD ou TED rotation interne de la CF' ) && setJambeHaut2("backgroundBlue")
-        commentArray.includes("SMCD muscles de la flexion rachidienne"|| 'SMCD core chaine ouverte'||'SMCD core chaine ouverte'|| 'SMCD des muscles rotateurs internes de hanche' || 'SMCD des muscles rotateurs externes de hanche' ) && setJambeHaut2("backgroundPurple")
-        commentArray.includes("JMD membre inf" || 'TED psoas') && setJambeCentre2("backgroundBlue")
-        commentArray.includes("JMD membre inf" || 'TED psoas') && setJambeCentre1("backgroundBlue")
+        commentArray.includes(("SMCD muscles de la flexion rachidienne")) && setVentreHautCentre("backgroundPurple")
+        commentArray.includes(("SMCD muscles de la flexion rachidienne")) && setVentreHaut2("backgroundPurple")
 
-        commentArray.includes("SMCD membre inf" || 'SMCD muscles de la flexion rachidienne') && setJambeCentre2("backgroundPurple")
-        commentArray.includes('JMD membre inf') && setJambeCentre3("backgroundBlue")
-        commentArray.includes('JMD membre inf') && setJambeCentre4("backgroundBlue")
-        commentArray.includes('JMD membre inf') && setJambeCentre5("backgroundBlue")
+        commentArray.includes("SMCD core chaine ouverte" ) && setVentreHautCote("backgroundPurple")
+        commentArray.includes('SMCD muscles de la flexion rachidienne' ) && setVentreHautCote("backgroundPurple")
 
-        commentArray.includes("SMCD membre inf") && setJambeCentre5("backgroundPurple")
-        commentArray.includes("SMCD membre inf") && setJambeCentre1("backgroundPurple")
+        commentArray.includes(("SMCD des muscles posturaux membre inf et ceinture pelvienne" )) &&  setVentreBasCentre("backgroundPurple")
+        commentArray.includes(("SMCD des muscles posturaux membre inf et ceinture pelvienne" )) && setVentreHautCentre("backgroundPurple")
 
-        commentArray.includes('SMCD membre inf' || 'TED Quadriceps ou TFL') && setJambeCentre3("backgroundPurple")
-        commentArray.includes('SMCD membre inf' || 'SMCD muscles de la flexion rachidienne') && setJambeCentre4("backgroundPurple")
-        commentArray.includes('SMCD membre inf' || 'TED Quadriceps ou TFL') && setJambeBas("backgroundPurple")
+        commentArray.includes("JMD ou TED flexion de hanche") &&  setVentreBasCentreCote("backgroundBlue")
+        commentArray.includes('JMD ou TED rotation externe de la CF' ) &&  setVentreBasCentreCote("backgroundBlue")
+        commentArray.includes('JMD ou TED rotation interne de la CF' ) &&  setVentreBasCentreCote("backgroundBlue")
+
+        commentArray.includes("SMCD des muscles posturaux membre inf et ceinture pelvienne") &&  setVentreBasCentreCote("backgroundPurple")
+        commentArray.includes('SMCD des muscles rotateurs internes de hanche' ) &&  setVentreBasCentreCote("backgroundPurple")
+        commentArray.includes('SMCD des muscles rotateurs externes de hanche' ) &&  setVentreBasCentreCote("backgroundPurple")
+
+        commentArray.includes("JMD ou TED flexion de hanche",) && setJambeHaut1("backgroundBlue")
+        commentArray.includes('JMD ou TED rotation externe de la CF') && setJambeHaut1("backgroundBlue")
+        commentArray.includes(('JMD ou TED rotation interne de la CF' )) && setJambeHaut1("backgroundBlue")
+
+        commentArray.includes("SMCD core chaine ouverte") && setJambeHaut1("backgroundPurple")
+        commentArray.includes( 'SMCD muscles de la flexion rachidienne') && setJambeHaut1("backgroundPurple")
+        commentArray.includes( 'SMCD des muscles rotateurs internes de hanche' ) && setJambeHaut1("backgroundPurple")
+        commentArray.includes('SMCD des muscles rotateurs externes de hanche' ) && setJambeHaut1("backgroundPurple")
+
+        commentArray.includes("JMD ou TED flexion de hanche") && setJambeHaut2("backgroundBlue")
+        commentArray.includes( 'JMD ou TED rotation externe de la CF') && setJambeHaut2("backgroundBlue")
+        commentArray.includes('JMD ou TED rotation interne de la CF' ) && setJambeHaut2("backgroundBlue")
+
+        commentArray.includes("SMCD muscles de la flexion rachidienne") && setJambeHaut2("backgroundPurple")
+        commentArray.includes('SMCD core chaine ouverte') && setJambeHaut2("backgroundPurple")
+        commentArray.includes( 'SMCD des muscles rotateurs internes de hanche' ) && setJambeHaut2("backgroundPurple")
+        commentArray.includes('SMCD des muscles rotateurs externes de hanche' ) && setJambeHaut2("backgroundPurple")
+
+        commentArray.includes("SMCD muscles de la flexion rachidienne") && setJambeHaut2("backgroundPurple")
+        commentArray.includes('SMCD core chaine ouverte') && setJambeHaut2("backgroundPurple")
+        commentArray.includes('SMCD des muscles rotateurs internes de hanche' ) && setJambeHaut2("backgroundPurple")
+        commentArray.includes('SMCD des muscles rotateurs externes de hanche' ) && setJambeHaut2("backgroundPurple")
+
+        commentArray.includes("JMD membre inf" ) && setJambeCentre2("backgroundBlue")
+        commentArray.includes('TED psoas') && setJambeCentre2("backgroundBlue")
+
+        commentArray.includes( 'TED psoas') && setJambeCentre1("backgroundBlue")
+        commentArray.includes("JMD membre inf") && setJambeCentre1("backgroundBlue")
+
+        commentArray.includes("SMCD membre inf" ) && setJambeCentre2("backgroundPurple")
+        commentArray.includes('SMCD muscles de la flexion rachidienne') && setJambeCentre2("backgroundPurple")
+
+        commentArray.includes(('JMD membre inf')) && setJambeCentre3("backgroundBlue")
+        commentArray.includes(('JMD membre inf')) && setJambeCentre4("backgroundBlue")
+        commentArray.includes(('JMD membre inf')) && setJambeCentre5("backgroundBlue")
+
+        commentArray.includes(("SMCD membre inf")) && setJambeCentre5("backgroundPurple")
+        commentArray.includes(("SMCD membre inf")) && setJambeCentre1("backgroundPurple")
+
+        commentArray.includes('SMCD membre inf') && setJambeCentre3("backgroundPurple"),
+        commentArray.includes('TED Quadriceps ou TFL') && setJambeCentre3("backgroundPurple"),
+
+        commentArray.includes('SMCD membre inf' ) && setJambeCentre4("backgroundPurple")
+        commentArray.includes('SMCD muscles de la flexion rachidienne') && setJambeCentre4("backgroundPurple")
+
+        commentArray.includes('SMCD membre inf' ) && setJambeBas("backgroundPurple")
+        commentArray.includes('TED Quadriceps ou TFL') && setJambeBas("backgroundPurple")
+
         commentArray.includes("JMD ou TED dorsiflexion") && setPied("backgroundBlue")
 
-        commentArray.includes("JMD C1,C2 ou TED" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHaut("backgroundBlue")
-        commentArray.includes("JMD basse cervicales, moyennes ou TED" || "JMD/TED cervicale et haute thoracique" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHautMilieu("backgroundBlue")
-        commentArray.includes("SMCD Extension cervicale et muscles posturaux du cou") && setDosNuqueHautMilieu("backgroundPurple")
-        commentArray.includes("JMD/TED Basse et moyennes cervicales uniquement" || "JMD/TED cervicale et haute thoracique" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicalesJMD basse cervicales, moyennes ou TED" || "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHautCote("backgroundBlue")
-        commentArray.includes("SMCD Extension cervicale et muscles posturaux du cou"|| "SMCD des rotateurs du cou"|| "SMCD des muscles extenseurs du cou" || "SMCD des muscles de la rotation du coup") && setDosNuqueHautCote("backgroundPurple")
+        commentArray.includes("JMD C1,C2 ou TED" )&& setDosNuqueHaut("backgroundBlue")
+        commentArray.includes("JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales")&& setDosNuqueHaut("backgroundBlue")
+
+        commentArray.includes("JMD basse cervicales") && setDosNuqueHautMilieu("backgroundBlue")
+        commentArray.includes( "JMD/TED cervicale et haute thoracique" ) && setDosNuqueHautMilieu("backgroundBlue")
+        commentArray.includes("JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHautMilieu("backgroundBlue")
+
+        commentArray.includes(("SMCD Extension cervicale et muscles posturaux du cou")) && setDosNuqueHautMilieu("backgroundPurple")
+
+        commentArray.includes("JMD/TED Basse et moyennes cervicales uniquement" ) && setDosNuqueHautCote("backgroundBlue")
+        commentArray.includes( "JMD/TED cervicale et haute thoracique" ) && setDosNuqueHautCote("backgroundBlue")
+        commentArray.includes( "JMD C0/C1 / TED Sous Occipitaux +/- JMD/TED basses et moyennes cervicales") && setDosNuqueHautCote("backgroundBlue")
+        commentArray.includes("JMD basse cervicales, moyennes ou TED") && setDosNuqueHautCote("backgroundBlue")
+
+        commentArray.includes("SMCD Extension cervicale et muscles posturaux du cou") && setDosNuqueHautCote("backgroundPurple")
+        commentArray.includes( "SMCD des rotateurs du cou") && setDosNuqueHautCote("backgroundPurple")
+        commentArray.includes( "SMCD des muscles extenseurs du cou" ) && setDosNuqueHautCote("backgroundPurple")
+        commentArray.includes( "SMCD des muscles de la rotation du coup") && setDosNuqueHautCote("backgroundPurple")
+
         commentArray.includes("JMD/TED cervicale et haute thoracique") && setDosNuqueBas("backgroundBlue")
         commentArray.includes("SMCD des muscles extenseurs du cou") && setDosNuqueBas("backgroundPurple")
         commentArray.includes("JMD/TED Extension/rotation thoracique") && setColonneCentre("backgroundBlue")
         commentArray.includes("SMCD Extension/Rotation thoracique") && setColonneCentre("backgroundPurple")
         commentArray.includes("JMD/TED flexion du rachis") && setColonneGauche("backgroundBlue")
-        commentArray.includes("SMCD des muscles postauraux" || 'SMCD des muscles extenseurs rachidiens' ||'SMCD des muscles interscapulaires') && setColonneGauche("backgroundPurple")
-        commentArray.includes("JMD/TED flexion du rachis") && setColonneGaucheBas("backgroundBlue")
-        commentArray.includes("JMD/TED flexion du rachis" ||'"JMD ou TED rotation lombaire') && setColonneGaucheBas1("backgroundBlue")
+        commentArray.includes("SMCD des muscles postauraux" ) && setColonneGauche("backgroundPurple")
+        commentArray.includes('SMCD des muscles extenseurs rachidiens' ) && setColonneGauche("backgroundPurple")
+        commentArray.includes('SMCD des muscles interscapulaires') && setColonneGauche("backgroundPurple")
 
-        commentArray.includes("SMCD des muscles postauraux" || 'SMCD des muscles extenseurs rachidiens') && setColonneGaucheBas("backgroundPurple")
-        commentArray.includes("SMCD des muscles postauraux" || 'SMCD des muscles extenseurs rachidiens') && setColonneGaucheBas1("backgroundPurple")
+        commentArray.includes("JMD/TED flexion du rachis") && setColonneGaucheBas("backgroundBlue")
+        commentArray.includes("JMD/TED flexion du rachis" ) && setColonneGaucheBas1("backgroundBlue")
+        commentArray.includes("JMD ou TED rotation lombaire") && setColonneGaucheBas1("backgroundBlue")
+
+        commentArray.includes("SMCD des muscles postauraux" ) && setColonneGaucheBas("backgroundPurple")
+        commentArray.includes( 'SMCD des muscles extenseurs rachidiens') && setColonneGaucheBas("backgroundPurple")
+
+        commentArray.includes("SMCD des muscles postauraux" ) && setColonneGaucheBas1("backgroundPurple")
+        commentArray.includes('SMCD des muscles extenseurs rachidiens') && setColonneGaucheBas1("backgroundPurple")
+
         commentArray.includes("JMD ou TED rotation lombaire") && setColonneGaucheBas2("backgroundBlue")
         commentArray.includes("JMD ou TED rotation lombaire") &&   setColonneGaucheToutBas("backgroundBlue")
         commentArray.includes("SMCD des muscles extenseurs rachidiens") && setColonneGaucheBas2("backgroundPurple")
-        commentArray.includes("JMD ou TED flexion de hanche" || "JMD/TED abduction coxo-fémoral" || "JMD/TED Extension coxo-fémoral") && setFesse1("backgroundBlue")
-        commentArray.includes("SMCD glutéus med" || "SMCD glutéus maximus" || "SMCD Extension coxo-fémoral") && setFesse1("backgroundPurple")
-        commentArray.includes("JMD ou TED flexion de hanche" || "JMD/TED abduction coxo-fémoral" || "JMD/TED Extension coxo-fémoral" || "JMD ou TED de la coxo-fémoral") && setFesse2("backgroundBlue")
-        commentArray.includes("SMCD glutéus med" || "SMCD glutéus maximus" || "SMCD rotation externe coxo-fémoral" || "SMCD Extension coxo-fémoral") && setFesse2("backgroundPurple")
-        commentArray.includes("TED chaine post membre inf"|| "JMD ou TED dorsiflexion") && setMollet("backgroundBlue")
+
+        commentArray.includes("JMD ou TED flexion de hanche" ) && setFesse1("backgroundBlue")
+        commentArray.includes("JMD/TED abduction coxo-fémoral") && setFesse1("backgroundBlue")
+        commentArray.includes("JMD/TED Extension coxo-fémoral") && setFesse1("backgroundBlue")
+
+        commentArray.includes("SMCD glutéus med") && setFesse1("backgroundPurple")
+        commentArray.includes("SMCD glutéus maximus" ) && setFesse1("backgroundPurple")
+        commentArray.includes( "SMCD Extension coxo-fémoral") && setFesse1("backgroundPurple")
+
+        commentArray.includes("JMD ou TED flexion de hanche" ) && setFesse2("backgroundBlue")
+        commentArray.includes( "JMD/TED abduction coxo-fémoral" ) && setFesse2("backgroundBlue")
+        commentArray.includes( "JMD/TED Extension coxo-fémoral" ) && setFesse2("backgroundBlue")
+        commentArray.includes("JMD ou TED de la coxo-fémoral") && setFesse2("backgroundBlue")
+
+        commentArray.includes("SMCD glutéus med" ) && setFesse2("backgroundPurple")
+        commentArray.includes( "SMCD glutéus maximus") && setFesse2("backgroundPurple")
+        commentArray.includes( "SMCD rotation externe coxo-fémoral" ) && setFesse2("backgroundPurple")
+        commentArray.includes( "SMCD Extension coxo-fémoral") && setFesse2("backgroundPurple")
+
+        commentArray.includes("TED chaine post membre inf") && setMollet("backgroundBlue")
+        commentArray.includes("JMD ou TED dorsiflexion") && setMollet("backgroundBlue")
+
         commentArray.includes("SMCD des muscles de la flexion plantaire") && setMollet("backgroundPurple")
         commentArray.includes("JMD/TED Flexion du coude") && setCoude("backgroundBlue")
         commentArray.includes("JMD/TED Rotation interne gléno-humérale") && setDosGauche1("backgroundBlue"),
         commentArray.includes("JMD/TED Rotation interne gléno-humérale") &&  setDosGauche2("backgroundBlue"),
        
-        commentArray.includes("SMCD Rotateur interne") && setDosGauche1("backgroundPurple"),setDosGauche2
-        commentArray.includes("JMD/TED Rotation externe gléno-humérale" ||"JMD/TED Rotation interne gléno-humérale") && setDosGauche3("backgroundBlue")
-        commentArray.includes("SMCD rotateurs externes" ||'SMCD Rotateur interne' ||'SMCD Extenseurs Gléno-huméraux') && setDosGauche3("backgroundPurple")
-        commentArray.includes("JMD/TED Rotation externe gléno-humérale") && setDosGauche4("backgroundBlue")
-        commentArray.includes("SMCD rotateurs externes" ||'SMCD Extenseurs Gléno-huméraux') && setDosGauche4("backgroundPurple")
+        commentArray.includes("SMCD Rotateur interne") && setDosGauche1("backgroundPurple")
+        commentArray.includes("SMCD Rotateur interne") && setDosGauche2("backgroundPurple")
 
-    }, [])
+        commentArray.includes("JMD/TED Rotation externe gléno-humérale" ,"JMD/TED Rotation interne gléno-humérale") && setDosGauche3("backgroundBlue")
+        commentArray.includes("JMD/TED Rotation interne gléno-humérale") && setDosGauche3("backgroundBlue")
+
+        commentArray.includes("SMCD rotateurs externes" ) && setDosGauche3("backgroundPurple")
+        commentArray.includes('SMCD Rotateur interne' ) && setDosGauche3("backgroundPurple")
+        commentArray.includes('SMCD Extenseurs Gléno-huméraux') && setDosGauche3("backgroundPurple")
+
+        commentArray.includes(("JMD/TED Rotation externe gléno-humérale")) && setDosGauche4("backgroundBlue")
+        commentArray.includes("SMCD rotateurs externes" ) && setDosGauche4("backgroundPurple")
+        commentArray.includes('SMCD Extenseurs Gléno-huméraux') && setDosGauche4("backgroundPurple")
+
+        }
+
+    }, [isFocused])
     
+
 async function generateHTML() {
-   
-   
 
   return `
   <!DOCTYPE html>

@@ -20,8 +20,11 @@ function RowDoubleGray({title,text,firstCase,secondCase}){
             if(typeof(props.data[patientId][title]) != "undefined"){
                 if(props.data[patientId][title][text]===firstCase){
                     setSelected(true)
+                    setSecondCaseSelected(false)
+                    
                 }else if (props.data[patientId][title][text]===secondCase){
                     setSelected(false)
+                    setSecondCaseSelected(true)
                 }
             }
             if (typeof props.data[patientId]["diagnostic"][title]!="undefined"){

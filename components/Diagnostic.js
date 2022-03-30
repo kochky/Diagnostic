@@ -2,6 +2,7 @@ import { StyleSheet, Text, View,ScrollView,TextInput,Button,Image,Modal } from '
 import React,{ useEffect, useState } from 'react';
 import { UserContext } from '../Context'
 import commentaireGrisArray from './ressources/commentaireGrisArray';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 
 function Diagnostic ({navigation}){
   
@@ -61,6 +62,7 @@ function Diagnostic ({navigation}){
 
   return(
     <View style={{flex:1}}>
+      <KeyboardAwareScrollView style={styles.container} contentContainerStyle={styles.contentContainer}> 
         <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
             <View style={styles.containerIcon}>
                 <Image  style={styles.icon} source={require('../ressources/patient.png')}/>
@@ -135,6 +137,8 @@ function Diagnostic ({navigation}){
                   </View>
               </Modal>
         </ScrollView>
+  </KeyboardAwareScrollView>
+
 </View>
     )    
 }
